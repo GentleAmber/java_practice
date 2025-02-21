@@ -57,16 +57,20 @@ class Animal{
 //        System.out.println("Animal is saying...");
 //    }
     private String name;
+    public String getName(){
+        return name;
+    }
 
     public Animal(String name){
         this.name = name;
     }
-    public Animal(){
+    public Animal(){ }
 
+    public void sleep(){
+        System.out.println("Animal is sleeping.");
     }
-
-    public String getName(){
-        return name;
+    public void eat(){
+        System.out.println("Animal is eating.");
     }
 }
 class Dog extends Animal{
@@ -85,7 +89,15 @@ class Cat extends Animal{
     public Cat(String name){
         super(name);
     }
-//    @Override
+    public void catchMouse(){
+        System.out.println(getName() + " catches a mice!");
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("Cat " + getName() + " is eating.");
+    }
+    //    @Override
 //    public void say() {
 //        System.out.println("Cat is saying...");
 //    }
