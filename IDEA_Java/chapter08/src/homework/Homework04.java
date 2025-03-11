@@ -7,9 +7,9 @@ public class Homework04 {
         Employee jun_zhou = new commonEmployee("Jun Zhou", 1200, 25);
         Employee jack_turnipseed = new Employee("Jack Turnipseed", 1800, 20);
 
-        jack_ma.printSalary();
-        jun_zhou.printSalary();
-        jack_turnipseed.printSalary();
+        System.out.println("Jack Ma's annual salary: " + jack_ma.annualSalary());
+        System.out.println("Jun zhou's annual salary: " + jun_zhou.annualSalary());
+        System.out.println("Jack Turnipseed's annual salary: " + jack_turnipseed.annualSalary());
     }
 }
 
@@ -18,9 +18,8 @@ class Employee{
     private double salaryDaily;
     private int workingDays;
 
-    public void printSalary() {
-        System.out.println("For an employee, monthly salary is: " +
-                getSalaryDaily() * getWorkingDays());
+    public double annualSalary() {
+        return getSalaryDaily() * getWorkingDays();
     }
 
     public String getName() {
@@ -76,10 +75,8 @@ class commonEmployee extends Employee{
     }
 
     @Override
-    public void printSalary() {
-        System.out.println("For a common employee, monthly salary is: " +
-                "\ndaily salary * working days * grade\n" + getSalaryDaily() *
-                getWorkingDays() * this.grade);
+    public double annualSalary() {
+        return getSalaryDaily() * getWorkingDays() * this.grade;
     }
 }
 
@@ -94,9 +91,7 @@ class Manager extends Employee{
     }
 
     @Override
-    public void printSalary() {
-        System.out.println("For a manager, monthly salary is: " +
-                "\n1000 + daily salary * working days * grade\n" + (1000 + getSalaryDaily() *
-                getWorkingDays() * this.grade));
+    public double annualSalary() {
+        return 1000 + getSalaryDaily() * getWorkingDays() * this.grade;
     }
 }
