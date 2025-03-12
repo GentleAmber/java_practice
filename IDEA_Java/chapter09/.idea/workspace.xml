@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="89181c3a-2767-47c7-a038-3e8fdf2b882a" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="E:\IntelliJ_IDEA\IntelliJ IDEA 2020.2.3\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2tu2ze4ewjtSv4nowKgFNiXgU81" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../chapter08/src/homework" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager" selected="Application.MainLoop">
+    <configuration name="MainLoop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lettingsystem.MainLoop" />
+      <module name="chapter09" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lettingsystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lettingsystem.Test" />
+      <module name="chapter09" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lettingsystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MainLoop" />
+        <item itemvalue="Application.Test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="89181c3a-2767-47c7-a038-3e8fdf2b882a" name="Default Changelist" comment="" />
+      <created>1741187906796</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741187906796</updated>
+      <workItem from="1741187907853" duration="4359000" />
+      <workItem from="1741254169619" duration="6180000" />
+      <workItem from="1741351850483" duration="3002000" />
+      <workItem from="1741685741842" duration="2785000" />
+      <workItem from="1741689375472" duration="7778000" />
+      <workItem from="1741772985282" duration="1653000" />
+    </task>
+    <task id="LOCAL-00001" summary="“Letting management system&quot;">
+      <created>1741774256334</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741774256334</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="restore" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="“Letting management system&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="“Letting management system&quot;" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="703" y="0" key="#com.intellij.ide.util.MemberChooser" timestamp="1741688139107">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="703" y="0" key="#com.intellij.ide.util.MemberChooser/0.0.1707.1019@0.0.1707.1019" timestamp="1741688139107" />
+    <state x="461" y="344" width="784" height="348" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1741689320551">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="461" y="344" width="784" height="348" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1707.1019@0.0.1707.1019" timestamp="1741689320551" />
+    <state x="93" y="93" width="1521" height="833" key="DiffContextDialog" timestamp="1741774323108">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="93" y="93" width="1521" height="833" key="DiffContextDialog/0.0.1707.1019@0.0.1707.1019" timestamp="1741774323108" />
+    <state x="475" y="85" key="FileChooserDialogImpl" timestamp="1741188673906">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="475" y="85" key="FileChooserDialogImpl/0.0.1707.1019@0.0.1707.1019" timestamp="1741188673906" />
+    <state width="1208" height="214" key="GridCell.Tab.0.bottom" timestamp="1741774259608">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1208" height="214" key="GridCell.Tab.0.bottom/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
+    <state width="1208" height="214" key="GridCell.Tab.0.center" timestamp="1741774259608">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1208" height="214" key="GridCell.Tab.0.center/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
+    <state width="1208" height="214" key="GridCell.Tab.0.left" timestamp="1741774259608">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1208" height="214" key="GridCell.Tab.0.left/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
+    <state width="1208" height="214" key="GridCell.Tab.0.right" timestamp="1741774259608">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1208" height="214" key="GridCell.Tab.0.right/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
+    <state width="1631" height="336" key="GridCell.Tab.1.bottom" timestamp="1741730873252">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1631" height="336" key="GridCell.Tab.1.bottom/0.0.1707.1019@0.0.1707.1019" timestamp="1741730873252" />
+    <state width="1631" height="336" key="GridCell.Tab.1.center" timestamp="1741730873252">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1631" height="336" key="GridCell.Tab.1.center/0.0.1707.1019@0.0.1707.1019" timestamp="1741730873252" />
+    <state width="1631" height="336" key="GridCell.Tab.1.left" timestamp="1741730873252">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1631" height="336" key="GridCell.Tab.1.left/0.0.1707.1019@0.0.1707.1019" timestamp="1741730873252" />
+    <state width="1631" height="336" key="GridCell.Tab.1.right" timestamp="1741730873252">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="1631" height="336" key="GridCell.Tab.1.right/0.0.1707.1019@0.0.1707.1019" timestamp="1741730873252" />
+    <state x="0" y="0" key="SettingsEditor" timestamp="1741773373181">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="0" y="0" key="SettingsEditor/0.0.1707.1019@0.0.1707.1019" timestamp="1741773373181" />
+    <state x="256" y="70" key="Vcs.Push.Dialog.v2" timestamp="1741774321848">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="256" y="70" key="Vcs.Push.Dialog.v2/0.0.1707.1019@0.0.1707.1019" timestamp="1741774321848" />
+    <state width="860" height="516" key="XDebugger.FullValuePopup" timestamp="1741710552761">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state width="860" height="516" key="XDebugger.FullValuePopup/0.0.1707.1019@0.0.1707.1019" timestamp="1741710552761" />
+  </component>
+</project>
