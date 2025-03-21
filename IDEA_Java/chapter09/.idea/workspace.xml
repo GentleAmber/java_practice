@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </select>
+    <expand />
+    <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89181c3a-2767-47c7-a038-3e8fdf2b882a" name="Default Changelist" comment="" />
+    <list default="true" id="89181c3a-2767-47c7-a038-3e8fdf2b882a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,11 +40,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../chapter08/src/homework" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -74,7 +57,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunManager" selected="Application.MainLoop">
-    <configuration name="MainLoop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="MainLoop" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="lettingsystem.MainLoop" />
       <module name="chapter09" />
       <extension name="coverage">
@@ -100,22 +83,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainLoop" />
         <item itemvalue="Application.Test" />
       </list>
     </recent_temporary>
@@ -133,7 +113,10 @@
       <workItem from="1741351850483" duration="3002000" />
       <workItem from="1741685741842" duration="2785000" />
       <workItem from="1741689375472" duration="7778000" />
-      <workItem from="1741772985282" duration="1653000" />
+      <workItem from="1741772985282" duration="2025000" />
+      <workItem from="1741775079596" duration="396000" />
+      <workItem from="1741775528388" duration="187000" />
+      <workItem from="1741775727375" duration="15000" />
     </task>
     <task id="LOCAL-00001" summary="“Letting management system&quot;">
       <created>1741774256334</created>
@@ -202,6 +185,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="“Letting management system&quot;" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="0" y="0" key="#Project_Structure" timestamp="1741775566687">
+      <screen x="0" y="0" width="1707" height="1019" />
+    </state>
+    <state x="0" y="0" key="#Project_Structure/0.0.1707.1019@0.0.1707.1019" timestamp="1741775566687" />
     <state x="703" y="0" key="#com.intellij.ide.util.MemberChooser" timestamp="1741688139107">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
@@ -214,26 +201,26 @@
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
     <state x="93" y="93" width="1521" height="833" key="DiffContextDialog/0.0.1707.1019@0.0.1707.1019" timestamp="1741774323108" />
-    <state x="475" y="85" key="FileChooserDialogImpl" timestamp="1741188673906">
+    <state x="430" y="36" key="FileChooserDialogImpl" timestamp="1741775581018">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
-    <state x="475" y="85" key="FileChooserDialogImpl/0.0.1707.1019@0.0.1707.1019" timestamp="1741188673906" />
-    <state width="1208" height="214" key="GridCell.Tab.0.bottom" timestamp="1741774259608">
+    <state x="430" y="36" key="FileChooserDialogImpl/0.0.1707.1019@0.0.1707.1019" timestamp="1741775581018" />
+    <state width="1208" height="214" key="GridCell.Tab.0.bottom" timestamp="1741775025092">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
-    <state width="1208" height="214" key="GridCell.Tab.0.bottom/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
-    <state width="1208" height="214" key="GridCell.Tab.0.center" timestamp="1741774259608">
+    <state width="1208" height="214" key="GridCell.Tab.0.bottom/0.0.1707.1019@0.0.1707.1019" timestamp="1741775025092" />
+    <state width="1208" height="214" key="GridCell.Tab.0.center" timestamp="1741775025092">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
-    <state width="1208" height="214" key="GridCell.Tab.0.center/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
-    <state width="1208" height="214" key="GridCell.Tab.0.left" timestamp="1741774259608">
+    <state width="1208" height="214" key="GridCell.Tab.0.center/0.0.1707.1019@0.0.1707.1019" timestamp="1741775025092" />
+    <state width="1208" height="214" key="GridCell.Tab.0.left" timestamp="1741775025092">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
-    <state width="1208" height="214" key="GridCell.Tab.0.left/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
-    <state width="1208" height="214" key="GridCell.Tab.0.right" timestamp="1741774259608">
+    <state width="1208" height="214" key="GridCell.Tab.0.left/0.0.1707.1019@0.0.1707.1019" timestamp="1741775025092" />
+    <state width="1208" height="214" key="GridCell.Tab.0.right" timestamp="1741775025092">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
-    <state width="1208" height="214" key="GridCell.Tab.0.right/0.0.1707.1019@0.0.1707.1019" timestamp="1741774259608" />
+    <state width="1208" height="214" key="GridCell.Tab.0.right/0.0.1707.1019@0.0.1707.1019" timestamp="1741775025092" />
     <state width="1631" height="336" key="GridCell.Tab.1.bottom" timestamp="1741730873252">
       <screen x="0" y="0" width="1707" height="1019" />
     </state>
