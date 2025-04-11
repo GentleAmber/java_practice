@@ -11,6 +11,8 @@ public class HashSetDetails {
 
         set.add("juicy");
         set.add("juicy");
+        set.add(1);
+        set.add(1);
         set.add(new Dog("Tom"));
         set.add(new Dog("Tom"));
         set.add(new String("java"));
