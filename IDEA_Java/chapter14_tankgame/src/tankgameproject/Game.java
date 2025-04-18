@@ -1,5 +1,6 @@
+package tankgameproject;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class Game extends JFrame {
     //Define my panel

@@ -1,16 +1,23 @@
+package tankgameproject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Vector;
 
 public class MyPanel extends JPanel implements KeyListener {
     //Define my tank
     MyTank myTank = null;
-    int TANK_MOVE_SPEED = 5;
-    int myTankDirection;
+    Vector<EnemyTank> enemyTanks= new Vector<>();
+    int enemyTankSize = 3;
+
 
     public MyPanel() {
-        myTank = new MyTank(100, 100);//Initialise my tank
+        myTank = new MyTank(500, 600);//Initialise my tank
+        for (int i = 0; i < enemyTankSize; i++) {
+            enemyTanks.add(new EnemyTank(200 * (i + 1), 100));
+        }
     }
 
     @Override
@@ -18,7 +25,10 @@ public class MyPanel extends JPanel implements KeyListener {
         super.paint(g);
         g.fillRect(0, 0, 1000, 750);//Draw the background. By default the colour is black
         //Draw the tanks - method encapsulated
-        drawTank(myTank.x, myTank.y, g, myTankDirection,0);
+        drawTank(myTank.x, myTank.y, g, myTank.direction,0);
+        for (EnemyTank e : enemyTanks) {
+            drawTank(e.x, e.y, g, e.direction, 1);
+        }
     }
 
 
@@ -87,17 +97,17 @@ public class MyPanel extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            myTank.y += TANK_MOVE_SPEED;
-            myTankDirection = 2;
+            myTank.moveDown();
+            myTank.direction = 2;
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            myTank.y -= TANK_MOVE_SPEED;
-            myTankDirection = 0;
+            myTank.moveUp();
+            myTank.direction = 0;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            myTank.x -= TANK_MOVE_SPEED;
-            myTankDirection = 3;
+            myTank.moveLeft();
+            myTank.direction = 3;
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            myTank.x += TANK_MOVE_SPEED;
-            myTankDirection = 1;
+            myTank.moveRight();
+            myTank.direction = 1;
         }
 
         this.repaint();
