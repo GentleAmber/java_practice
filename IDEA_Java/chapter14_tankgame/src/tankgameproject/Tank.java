@@ -26,4 +26,26 @@ public class Tank {
     public void moveDown() {
         this.y += TANK_MOVE_SPEED;
     }
+
+    public Bullet shoot() {
+        Bullet b = new Bullet(x, y ,direction);
+        //Adjusting bullet's coordinates to the end of the tank's gun
+        switch (direction) {
+            case 0:
+                b.x += 25;
+                break;
+            case 1:
+                b.x += 50;
+                b.y += 25;
+                break;
+            case 2:
+                b.x += 25;
+                b.y += 50;
+                break;
+            case 3:
+                b.y += 25;
+                break;
+        }
+        return b;
+    }
 }

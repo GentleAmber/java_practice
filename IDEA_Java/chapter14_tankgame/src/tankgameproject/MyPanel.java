@@ -11,6 +11,14 @@ public class MyPanel extends JPanel implements KeyListener {
     MyTank myTank = null;
     Vector<EnemyTank> enemyTanks= new Vector<>();
     int enemyTankSize = 3;
+    Vector<Bullet> bullets= new Vector<>();
+    int bulletSize = 50;
+
+    boolean upPressed = false;
+    boolean downPressed = false;
+    boolean leftPressed = false;
+    boolean rightPressed = false;
+    boolean jPressed = false;
 
 
     public MyPanel() {
@@ -18,6 +26,32 @@ public class MyPanel extends JPanel implements KeyListener {
         for (int i = 0; i < enemyTankSize; i++) {
             enemyTanks.add(new EnemyTank(200 * (i + 1), 100));
         }
+        Timer timer = new Timer(16, e -> {
+            updateGameStatus();
+            repaint();
+        });  // 60 FPS
+        timer.start();
+    }
+
+    public void updateGameStatus() {
+        if (downPressed) {
+            myTank.moveDown();
+            myTank.direction = 2;
+        } else if (upPressed) {
+            myTank.moveUp();
+            myTank.direction = 0;
+        } else if (leftPressed) {
+            myTank.moveLeft();
+            myTank.direction = 3;
+        } else if (rightPressed) {
+            myTank.moveRight();
+            myTank.direction = 1;
+        } else if (jPressed) {
+            Bullet bullet = myTank.shoot();
+            bullets.add(bullet);
+            new Thread(bullet).start();//Bullet start moving upon being shot
+        }
+
     }
 
     @Override
@@ -29,6 +63,8 @@ public class MyPanel extends JPanel implements KeyListener {
         for (EnemyTank e : enemyTanks) {
             drawTank(e.x, e.y, g, e.direction, 1);
         }
+        if (bullets.size() > 0)
+            drawBullets(g);
     }
 
 
@@ -84,8 +120,33 @@ public class MyPanel extends JPanel implements KeyListener {
                 g.drawLine(x + 20, y + 25, x, y + 25);
                 break;
 
-            default:
-                System.out.println("To be programmed");
+        }
+    }
+
+    public void drawBullets(Graphics g) {
+        int bulletsNum = bullets.size();
+        for (int i = 0; i < bulletsNum; i++) {
+            Bullet b = bullets.get(i);
+            if (b.x > 0 && b.x < 1000 && b.y > 0 && b.y < 750) {
+                switch (b.direction) {
+                    case 0:
+                        g.drawLine(b.x, b.y, b.x, b.y - 10);
+                        break;
+                    case 1:
+                        g.drawLine(b.x, b.y, b.x + 10, b.y);
+                        break;
+                    case 2:
+                        g.drawLine(b.x, b.y, b.x, b.y + 10);
+                        break;
+                    case 3:
+                        g.drawLine(b.x, b.y, b.x - 10, b.y);
+                        break;
+                }
+            } else {
+                bullets.remove(i);
+                i--;
+                bulletsNum--;
+            }
         }
     }
 
@@ -97,24 +158,30 @@ public class MyPanel extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            myTank.moveDown();
-            myTank.direction = 2;
+            downPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            myTank.moveUp();
-            myTank.direction = 0;
+            upPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            myTank.moveLeft();
-            myTank.direction = 3;
+            leftPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            myTank.moveRight();
-            myTank.direction = 1;
+            rightPressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_J) {
+            jPressed = true;
         }
 
-        this.repaint();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_DOWN)
+            downPressed = false;
+        else if (e.getKeyCode() == KeyEvent.VK_UP)
+            upPressed = false;
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT)
+            leftPressed = false;
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+            rightPressed = false;
+        else if (e.getKeyCode() == KeyEvent.VK_J)
+            jPressed = false;
     }
 }
