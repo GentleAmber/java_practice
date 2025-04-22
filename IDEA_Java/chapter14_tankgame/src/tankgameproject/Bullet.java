@@ -1,6 +1,6 @@
 package tankgameproject;
 
-public class Bullet implements Runnable{
+public class Bullet implements  Runnable{
     int x;
     int y;
     int direction;//0: facing up, 1: right, 2: down, 3: left
@@ -13,9 +13,8 @@ public class Bullet implements Runnable{
         this.direction = direction;
     }
 
-    @Override
     public void run() {
-        //When a bullet is still in the frame, it moves
+        //When a bullet is still in the frame, it moves. The sleep method keeps it on the frame
         while (true) {
             try {
                 Thread.sleep(50);
@@ -41,6 +40,7 @@ public class Bullet implements Runnable{
 
             if (!(x >= 0 && x <= 1000 && y >= 0 && y <= 750)) {
                 isAlive = false;
+                System.out.println("Bullets left on screen: " + MyPanel.bullets.size());
                 break;
             }
         }

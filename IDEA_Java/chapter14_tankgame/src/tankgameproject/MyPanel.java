@@ -11,40 +11,18 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     MyTank myTank = null;
     Vector<EnemyTank> enemyTanks= new Vector<>();
     int enemyTankSize = 3;
-    Vector<Bullet> bullets= new Vector<>();
+    static Vector<Bullet> bullets= new Vector<>();
     int bulletSize = 50;
 
     public MyPanel() {
         myTank = new MyTank(500, 600);//Initialise my tank
         for (int i = 0; i < enemyTankSize; i++) {
             enemyTanks.add(new EnemyTank(200 * (i + 1), 100));
+            new Thread(enemyTanks.get(i)).start();
         }
-//        Timer timer = new Timer(16, e -> {
-//            repaint();
-//        });  // 60 FPS
-//        timer.start();
+
     }
 
-//    public void updateGameStatus() {
-//        if (downPressed) {
-//            myTank.moveDown();
-//            myTank.direction = 2;
-//        } else if (upPressed) {
-//            myTank.moveUp();
-//            myTank.direction = 0;
-//        } else if (leftPressed) {
-//            myTank.moveLeft();
-//            myTank.direction = 3;
-//        } else if (rightPressed) {
-//            myTank.moveRight();
-//            myTank.direction = 1;
-//        } else if (jPressed) {
-//            Bullet bullet = myTank.shoot();
-//            bullets.add(bullet);
-//            new Thread(bullet).start();//Bullet start moving upon being shot
-//        }
-//
-//    }
 
     @Override
     public void paint(Graphics g) {//Graphics is like the painting tool
@@ -116,7 +94,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void drawBullets(Graphics g) {
+        //This method draws all the bullets as well as removes dead bullets from the vector
         int bulletsNum = bullets.size();
+        g.setColor(Color.WHITE);
         for (int i = 0; i < bulletsNum; i++) {
             Bullet b = bullets.get(i);
             if (b.isAlive) {
@@ -180,7 +160,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 //        int bulletCountTest = 0;
         while (true) {
             try {
-                Thread.sleep(20);
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
