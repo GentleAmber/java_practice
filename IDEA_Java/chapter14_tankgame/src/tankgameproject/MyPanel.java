@@ -8,19 +8,26 @@ import java.util.Vector;
 
 public class MyPanel extends JPanel implements KeyListener, Runnable {
     //Define my tank
-    MyTank myTank = null;
-    Vector<EnemyTank> enemyTanks= new Vector<>();
-    int enemyTankSize = 3;
-    static Vector<Bullet> bullets= new Vector<>();
-    int bulletSize = 50;
+    static MyTank myTank = null;
+
+    static EnemyTankManager eTManager = null;
+    Vector<EnemyTank> enemyTanks = null;
+
+    BulletManager bManager = null;
+    Vector<Bullet> bullets = null;
+
+
 
     public MyPanel() {
         myTank = new MyTank(500, 600);//Initialise my tank
-        for (int i = 0; i < enemyTankSize; i++) {
-            enemyTanks.add(new EnemyTank(200 * (i + 1), 100));
-            new Thread(enemyTanks.get(i)).start();
-        }
 
+        enemyTanks = EnemyTankManager.enemyTanks;
+        eTManager = new EnemyTankManager();
+        new Thread(eTManager).start();
+
+        bullets = BulletManager.bullets;
+        bManager = new BulletManager();
+        new Thread(bManager).start();
     }
 
 
@@ -94,11 +101,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void drawBullets(Graphics g) {
-        //This method draws all the bullets as well as removes dead bullets from the vector
-        int bulletsNum = bullets.size();
         g.setColor(Color.WHITE);
-        for (int i = 0; i < bulletsNum; i++) {
-            Bullet b = bullets.get(i);
+        for (Bullet b : bullets) {
             if (b.isAlive) {
                 switch (b.direction) {
                     case 0:
@@ -114,10 +118,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                         g.drawLine(b.x, b.y, b.x - 10, b.y);
                         break;
                 }
-            } else {
-                bullets.remove(i);
-                i--;
-                bulletsNum--;
             }
         }
     }
@@ -146,7 +146,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         if (e.getKeyCode() == KeyEvent.VK_J) {
             Bullet bullet = myTank.shoot();
             bullets.add(bullet);
-            new Thread(bullet).start();
         }
     }
 
@@ -160,7 +159,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 //        int bulletCountTest = 0;
         while (true) {
             try {
-                Thread.sleep(16);
+                Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
