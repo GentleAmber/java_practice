@@ -31,10 +31,9 @@ public class Tank {
 
 
 
-    public Tank(int x, int y, char direction) {
+    public Tank(int x, int y) {
         this.setX(x);
         this.setY(y);
-        this.setDirection(direction);
     }
 
     public boolean isMyTank() {

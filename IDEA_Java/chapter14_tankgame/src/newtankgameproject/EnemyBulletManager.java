@@ -4,7 +4,11 @@ import java.util.Vector;
 
 public class EnemyBulletManager implements GameEventListener, Runnable{
 
-    Vector<Bullet> enemyBullets = new Vector<>();
+    private static final Vector<Bullet> enemyBullets = new Vector<>();
+
+    public static Vector<Bullet> getEnemyBullets() {
+        return enemyBullets;
+    }
 
     public EnemyBulletManager() {
         GameEventBus.register(this);

@@ -1,7 +1,4 @@
 package newtankgameproject;
-
-import tankgameproject.MyPanel;
-
 import javax.swing.*;
 
 public class Game extends JFrame {
@@ -14,7 +11,6 @@ public class Game extends JFrame {
     public Game() {
         myPanel = new MyPanel();
         new Thread(myPanel).start();
-
         this.add(myPanel);
         this.addKeyListener(myPanel);
         this.setSize(1000, 750);//Set the size of frame to be the same as that of panel
