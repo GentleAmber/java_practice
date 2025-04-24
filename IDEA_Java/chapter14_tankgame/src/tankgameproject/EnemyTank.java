@@ -3,7 +3,6 @@ package tankgameproject;
 
 
 public class EnemyTank extends Tank{
-    boolean isAlive = true;
     boolean closeToMyTank = false;
 
     public EnemyTank(int x, int y) {
@@ -178,6 +177,6 @@ public class EnemyTank extends Tank{
                     break;
             }
         }
-
     }
+
 }

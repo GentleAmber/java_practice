@@ -5,6 +5,8 @@ public class Tank {
     int y;
     int direction;//0: facing up, 1: right, 2: down, 3: left
     int TANK_MOVE_SPEED = 5;
+    boolean isAlive = true;
+
 
     public Tank(int x, int y) {
         this.x = x;

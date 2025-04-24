@@ -165,8 +165,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             }
 
 //            bulletCountTest ++;
-            this.repaint();
-
+                this.repaint();
 //            if (bulletCountTest % 100 == 0) {
 //                System.out.println("Number of bullets: " + bullets.size());
 //            }

@@ -43,12 +43,15 @@ public class Bullet{
         for (int i = 0; i < enemyTankCoordinates.length; i++) {
             int enemyTankX = enemyTankCoordinates[i++];
             int enemyTankY = enemyTankCoordinates[i];
-
+            System.out.println("Enemy tank" + i / 2 + " coordinates: (" +
+                    enemyTankX + ", " + enemyTankY + ")");
             if (this.x >= enemyTankX && this.x <= enemyTankX + 50
             && this.y >= enemyTankY && this.y <= enemyTankY + 50) {
+                System.out.println("A bullet shoots an enemy tank.");
                 this.isAlive = false;//This bullet dies.
                 Vector<EnemyTank> enemyTanks = MyPanel.eTManager.enemyTanks;
-                enemyTanks.get(i / 2).isAlive = false;//The enemy tank dies.
+                System.out.println("The according enemy tank" + i / 2 + " is dead.");
+                MyPanel.eTManager.setEnemyTankDead(i / 2);//The enemy tank dies.
             }
         }
     }
@@ -58,7 +61,7 @@ public class Bullet{
         int tankNum = enemyTanks.size();
         int[] coordinates = new int[tankNum * 2];
 
-        for (int i = 0, j = 0; j < tankNum - 1; i++, j = i / 2) {
+        for (int i = 0, j = 0; j <= tankNum - 1; i++, j = i / 2) {
                 coordinates[i++] = enemyTanks.get(j).x;
                 coordinates[i] = enemyTanks.get(j).y;
         }
