@@ -27,6 +27,7 @@ public class MyBulletManager implements Runnable, GameEventListener{
                         myBullets.remove(i);
                         i--;
                         sizeNum--;
+                        System.out.println("Bullet" + bullet + " is removed.");
                     }
                 }
             }
@@ -36,16 +37,19 @@ public class MyBulletManager implements Runnable, GameEventListener{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            System.out.println("当前屏幕上子弹数：" + sizeNum);
         }
     }
 
     @Override
     public void onEvent(GameEvent event) {
         if (event instanceof MyTankShoots) {
-            System.out.println("MyBulletManager receives MyTankShoots.");
+//            System.out.println("MyBulletManager receives MyTankShoots.");
             Bullet myBullet = ((MyTankShoots) event).myBullet;
             myBullets.add(myBullet);
+        } else if (event instanceof EnemyTankGetsShot) {
+            Bullet myBullet = ((EnemyTankGetsShot) event).hitBullet;
+            myBullet.setAlive(false);
+            System.out.println("Bullet " + myBullet + " is dead.");
         }
     }
 }

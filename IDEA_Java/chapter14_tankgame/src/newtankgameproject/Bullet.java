@@ -24,7 +24,6 @@ public class Bullet {
                 x -= BULLET_MOVE_SPEED;
                 break;
         }
-            System.out.println("Bullet's coordinate: x=" + x + ", y=" + y);
 
         //When it's out of the frame, it's dead.
         if (!(x >= 0 && x <= 1000 && y >= 0 && y <= 750)) {
@@ -80,5 +79,10 @@ public class Bullet {
 
     public int getBULLET_MOVE_SPEED() {
         return BULLET_MOVE_SPEED;
+    }
+
+    @Override
+    public String toString() {
+        return "Bullet(" + this.getX() + ", " + this.getY() + ")";
     }
 }

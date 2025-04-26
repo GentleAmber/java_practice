@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.Vector;
 
 public class MyPanel extends JPanel implements Runnable, KeyListener {
-    MyTank myTank = null;
+    static MyTank myTank = null;
     EnemyTankManager enemyTankManager = null;
     Vector<EnemyTank> enemyTanks = null;
 
@@ -18,6 +18,11 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     EnemyBulletManager enemyBulletManager = null;
     Vector<Bullet> enemyBullets = null;
 
+    ClashMonitor clashMonitor = null;
+
+    public static MyTank getMyTank() {
+        return myTank;
+    }
 
     public MyPanel() {
         myTank = new MyTank(500, 600);//Initialise my tank
@@ -30,9 +35,12 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         enemyBulletManager = new EnemyBulletManager();
         enemyBullets = enemyBulletManager.getEnemyBullets();
 
+        clashMonitor = new ClashMonitor();
+
         new Thread(enemyTankManager).start();
         new Thread(myBulletManager).start();
         new Thread(enemyBulletManager).start();
+        new Thread(clashMonitor).start();
 
     }
 
@@ -43,9 +51,17 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         //Draw the tanks - method encapsulated
         drawTank(myTank, g, true);
         for (EnemyTank e : enemyTanks) {
-            drawTank(e, g, false);
+            if (e.isAlive())
+                drawTank(e, g, false);
         }
-        drawAllTheBullets(g);
+        for (Bullet b : myBullets) {
+            if (b.isAlive())
+                drawBullet(g, b);
+        }
+        for (Bullet b : enemyBullets) {
+            if (b.isAlive())
+                drawBullet(g, b);
+        }
 
     }
 
@@ -95,44 +111,23 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void drawAllTheBullets(Graphics g) {
+    public void drawBullet(Graphics g, Bullet b) {
         g.setColor(Color.WHITE);
-        for (Bullet b : enemyBullets) {
-            int x = b.getX();
-            int y = b.getY();
-            switch (b.getDirection()) {
-                case 'u':
-                    g.drawLine(x, y, x, y - 10);
-                    break;
-                case 'r':
-                    g.drawLine(x, y, x + 10, y);
-                    break;
-                case 'd':
-                    g.drawLine(x, y, x, y + 10);
-                    break;
-                case 'l':
-                    g.drawLine(x, y, x - 10, y);
-                    break;
-            }
-        }
-
-        for (Bullet b : myBullets) {
-            int x = b.getX();
-            int y = b.getY();
-            switch (b.getDirection()) {
-                case 'u':
-                    g.drawLine(x, y, x, y - 10);
-                    break;
-                case 'r':
-                    g.drawLine(x, y, x + 10, y);
-                    break;
-                case 'd':
-                    g.drawLine(x, y, x, y + 10);
-                    break;
-                case 'l':
-                    g.drawLine(x, y, x - 10, y);
-                    break;
-            }
+        int x = b.getX();
+        int y = b.getY();
+        switch (b.getDirection()) {
+            case 'u':
+                g.drawLine(x, y, x, y - 10);
+                break;
+            case 'r':
+                g.drawLine(x, y, x + 10, y);
+                break;
+            case 'd':
+                g.drawLine(x, y, x, y + 10);
+                break;
+            case 'l':
+                g.drawLine(x, y, x - 10, y);
+                break;
         }
     }
 
@@ -165,7 +160,6 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             myTank.moveRight();
         } else if (e.getKeyCode() == KeyEvent.VK_J) {
-            System.out.println("Pressed J.");
             GameEventBus.post(new MyTankShoots(myTank));
         }
     }

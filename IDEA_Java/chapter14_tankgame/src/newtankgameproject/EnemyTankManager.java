@@ -18,17 +18,23 @@ public class EnemyTankManager implements Runnable, GameEventListener{
         while (true) {
             tankNum = enemyTanks.size();
             for (int i = 0; i < tankNum; i++) {
-                EnemyTank thisTank = enemyTanks.get(i);
+                EnemyTank thisTank = enemyTanks. get(i);
 
                 if (thisTank.isAlive()) {
-                    continue;
+                    try {
+                        thisTank.randomMove(0, 0, 1000, 750);
+                        thisTank.randomShoot();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     enemyTanks.remove(i);
                     i--;
                     tankNum--;
+                    System.out.println(thisTank + " is removed.");
                 }
-
             }
+
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
@@ -45,7 +51,8 @@ public class EnemyTankManager implements Runnable, GameEventListener{
     public void onEvent(GameEvent event) {
         if (event instanceof EnemyTankGetsShot) {
             EnemyTank deadTank = ((EnemyTankGetsShot) event).killedTank;
-            enemyTanks.remove(deadTank); // 或者标记为 dead
+            deadTank.setAlive(false);
+            System.out.println("Enemy tank " + deadTank + " is dead.");
         }
     }
 }
