@@ -19,7 +19,7 @@ public class EnemyBulletManager implements GameEventListener, Runnable{
         if (event instanceof EnemyTankShoots) {
             Bullet enemyBullet = ((EnemyTankShoots) event).enemyBullet;
             enemyBullets.add(enemyBullet);
-        } else if (event instanceof )
+        }
     }
 
     @Override
