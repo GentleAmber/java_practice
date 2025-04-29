@@ -9,6 +9,7 @@ public class Game extends JFrame {
     }
 
     public Game() {
+        setTitle("Tank War");
         myPanel = new MyPanel();
         new Thread(myPanel).start();
         this.add(myPanel);

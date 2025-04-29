@@ -1,13 +1,13 @@
 package newtankgameproject;
 
 public class EnemyTank extends Tank{
-    public EnemyTank(int x, int y) {
-        super(x, y);
+    public EnemyTank(int x, int y, MyPanel myPanel) {
+        super(x, y, myPanel);
         this.setMyTank(false);
         this.setDirection('d');
     }
 
-    public void randomMove(int x, int y, int x1, int y1) throws InterruptedException {
+    public void randomMove() throws InterruptedException {
         //Pass the size of the panel into randomMove
 
         //Think for a random time before moving
@@ -33,7 +33,7 @@ public class EnemyTank extends Tank{
             case 1:
                 this.setDirection('r');
                 for (int i = 0; i < randomNumForDistance; i++) {
-                    if (this.getX() + this.getTANK_MOVE_SPEED() > 1000) {
+                    if (this.getX() + 50 + this.getTANK_MOVE_SPEED() > this.panelWidth) {
                         break;
                     } else {
                         this.setX(this.getX() + this.getTANK_MOVE_SPEED());
@@ -44,7 +44,7 @@ public class EnemyTank extends Tank{
             case 2:
                 this.setDirection('d');
                 for (int i = 0; i < randomNumForDistance; i++) {
-                    if (this.getY() + this.getTANK_MOVE_SPEED() > 750) {
+                    if (this.getY() + 50 + this.getTANK_MOVE_SPEED() > this.panelHeight) {
                         break;
                     } else {
                         this.setY(this.getY() + this.getTANK_MOVE_SPEED());

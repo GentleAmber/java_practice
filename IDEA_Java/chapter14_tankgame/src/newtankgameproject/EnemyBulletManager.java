@@ -19,7 +19,7 @@ public class EnemyBulletManager implements GameEventListener, Runnable{
         if (event instanceof EnemyTankShoots) {
             Bullet enemyBullet = ((EnemyTankShoots) event).enemyBullet;
             enemyBullets.add(enemyBullet);
-        }
+        } else if (event instanceof )
     }
 
     @Override
@@ -35,7 +35,6 @@ public class EnemyBulletManager implements GameEventListener, Runnable{
                         enemyBullets.remove(i);
                         i--;
                         sizeNum--;
-                        System.out.println("Bullet" + bullet + " is removed.");
                     }
                 }
             }

@@ -6,34 +6,57 @@ public class Tank {
     private int y;
     private char direction;//u: up, d: down, l: left, r: right
     private int TANK_MOVE_SPEED = 5;
-    private boolean isAlive = true;
+//    private boolean isAlive = true;
     private boolean isMyTank;
+    private Status status = Status.ALIVE;
+    enum Status{
+        ALIVE, DYING, DEAD
+    }
+    private int dyingCounter = 0;
+
+    int panelWidth;
+    int panelHeight;
+
 
     public void moveDown() {
-        this.setY(getY() + TANK_MOVE_SPEED);
+        if (getY() + TANK_MOVE_SPEED + 100 <  panelHeight) {
+            this.setY(getY() + TANK_MOVE_SPEED);
+        }
         this.setDirection('d');
+
     }
 
     public void moveUp() {
-        this.setY(getY() - TANK_MOVE_SPEED);
+        if (getY() - TANK_MOVE_SPEED >= 0) {
+            this.setY(getY() - TANK_MOVE_SPEED);
+        }
         this.setDirection('u');
     }
 
     public void moveLeft() {
-        this.setX(getX() - TANK_MOVE_SPEED);
+        if (getX() - TANK_MOVE_SPEED >= 0) {
+            this.setX(getX() - TANK_MOVE_SPEED);
+        }
         this.setDirection('l');
     }
 
     public void moveRight() {
-        this.setX(getX() + TANK_MOVE_SPEED);
+        if (getX() + 60 + TANK_MOVE_SPEED < panelWidth) {
+            this.setX(getX() + TANK_MOVE_SPEED);
+        }
         this.setDirection('r');
     }
 
+    public void isDying() {
+        System.out.println(this + " is dying");
+    }
 
 
-    public Tank(int x, int y) {
+    public Tank(int x, int y, MyPanel myPanel) {
         this.setX(x);
         this.setY(y);
+        this.panelWidth = myPanel.width;
+        this.panelHeight = myPanel.height;
     }
 
     public boolean isMyTank() {
@@ -72,11 +95,19 @@ public class Tank {
         return TANK_MOVE_SPEED;
     }
 
-    public boolean isAlive() {
-        return isAlive;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public int getDyingCounter() {
+        return dyingCounter;
+    }
+
+    public void dyingCounterIncrement() {
+        this.dyingCounter++;
     }
 }

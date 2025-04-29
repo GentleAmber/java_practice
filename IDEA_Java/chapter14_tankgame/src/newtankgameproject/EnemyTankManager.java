@@ -6,9 +6,6 @@ public class EnemyTankManager implements Runnable, GameEventListener{
     private static final Vector<EnemyTank> enemyTanks = new Vector<>();
 
     public EnemyTankManager() {
-        for (int i = 0; i <3; i++) {
-            enemyTanks.add(new EnemyTank(200 * (i + 1), 100));
-        }
         GameEventBus.register(this);
     }
 
@@ -20,18 +17,20 @@ public class EnemyTankManager implements Runnable, GameEventListener{
             for (int i = 0; i < tankNum; i++) {
                 EnemyTank thisTank = enemyTanks. get(i);
 
-                if (thisTank.isAlive()) {
+                if (thisTank.getStatus() == Tank.Status.ALIVE) {
                     try {
-                        thisTank.randomMove(0, 0, 1000, 750);
+                        thisTank.randomMove();
                         thisTank.randomShoot();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else {
+                } else if (thisTank.getStatus() == Tank.Status.DEAD){
                     enemyTanks.remove(i);
                     i--;
                     tankNum--;
                     System.out.println(thisTank + " is removed.");
+                } else {//It's still dying
+                    thisTank.isDying();
                 }
             }
 
@@ -51,8 +50,14 @@ public class EnemyTankManager implements Runnable, GameEventListener{
     public void onEvent(GameEvent event) {
         if (event instanceof EnemyTankGetsShot) {
             EnemyTank deadTank = ((EnemyTankGetsShot) event).killedTank;
-            deadTank.setAlive(false);
-            System.out.println("Enemy tank " + deadTank + " is dead.");
+            deadTank.setStatus(Tank.Status.DYING);
+            //First put it into a dying status so that the explosion effect can be drawn
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }//After 2 sec, it really dies.
+            deadTank.setStatus(Tank.Status.DEAD);
         }
     }
 }

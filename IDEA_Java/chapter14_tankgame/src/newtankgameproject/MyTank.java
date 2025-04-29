@@ -1,15 +1,19 @@
 package newtankgameproject;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 public class MyTank extends Tank{
-    public MyTank(int x, int y) {
-        super(x, y);
+    private int life;
+    public MyTank(int x, int y, int life, MyPanel myPanel) {
+        super(x, y, myPanel);
         this.setMyTank(true);
         this.setDirection('u');
+        this.setLife(life);
     }
 
+    public int getLife() {
+        return life;
+    }
 
-
+    public void setLife(int life) {
+        this.life = life;
+    }
 }

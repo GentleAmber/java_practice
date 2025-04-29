@@ -5,6 +5,7 @@ import java.util.Vector;
 public class MyBulletManager implements Runnable, GameEventListener{
 
     private static final Vector<Bullet> myBullets = new Vector<>();
+    private int maxBulletNum = 5;
 
     public static Vector<Bullet> getMyBullets() {
         return myBullets;
@@ -27,7 +28,6 @@ public class MyBulletManager implements Runnable, GameEventListener{
                         myBullets.remove(i);
                         i--;
                         sizeNum--;
-                        System.out.println("Bullet" + bullet + " is removed.");
                     }
                 }
             }
@@ -45,7 +45,9 @@ public class MyBulletManager implements Runnable, GameEventListener{
         if (event instanceof MyTankShoots) {
 //            System.out.println("MyBulletManager receives MyTankShoots.");
             Bullet myBullet = ((MyTankShoots) event).myBullet;
-            myBullets.add(myBullet);
+            if (myBullets.size() < maxBulletNum) {
+                myBullets.add(myBullet);
+            }
         } else if (event instanceof EnemyTankGetsShot) {
             Bullet myBullet = ((EnemyTankGetsShot) event).hitBullet;
             myBullet.setAlive(false);

@@ -8,7 +8,10 @@ import java.awt.event.KeyListener;
 import java.util.Vector;
 
 public class MyPanel extends JPanel implements Runnable, KeyListener {
+    int width = 1000;
+    int height = 750;
     static MyTank myTank = null;
+    static int explosionTimer = 0;
     EnemyTankManager enemyTankManager = null;
     Vector<EnemyTank> enemyTanks = null;
 
@@ -25,9 +28,12 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     }
 
     public MyPanel() {
-        myTank = new MyTank(500, 600);//Initialise my tank
+        myTank = new MyTank(500, 600, 3, this);//Initialise my tank
         enemyTankManager = new EnemyTankManager();
         enemyTanks = enemyTankManager.getEnemyTanks();
+        for (int i = 0; i <3; i++) {
+            enemyTanks.add(new EnemyTank(200 * (i + 1), 100, this));
+        }
 
         myBulletManager = new MyBulletManager();
         myBullets = myBulletManager.getMyBullets();
@@ -47,12 +53,19 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     @Override
     public void paint(Graphics g) {//Graphics is like the painting tool
         super.paint(g);
-        g.fillRect(0, 0, 1000, 750);//Draw the background. By default the colour is black
+        g.fillRect(0, 0, width, height);//Draw the background. By default the colour is black
         //Draw the tanks - method encapsulated
         drawTank(myTank, g, true);
         for (EnemyTank e : enemyTanks) {
-            if (e.isAlive())
+            if (e.getStatus() == Tank.Status.ALIVE)
                 drawTank(e, g, false);
+            else if (e.getStatus() == Tank.Status.DYING) {
+                drawTank(e, g, false);
+                //Explosion on top of the tank
+                drawExplosionCircle(g, e.getX() + 25, e.getY() + 25,
+                        10 + e.getDyingCounter() * 1);
+                e.dyingCounterIncrement();
+            }
         }
         for (Bullet b : myBullets) {
             if (b.isAlive())
@@ -129,6 +142,13 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
                 g.drawLine(x, y, x - 10, y);
                 break;
         }
+    }
+
+    public void drawExplosionCircle(Graphics g, int centerX, int centerY, int radius) {
+        g.setColor(Color.WHITE);
+        g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+        g.setColor(Color.RED);
+        g.drawOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
     }
 
     @Override

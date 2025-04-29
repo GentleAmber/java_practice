@@ -33,6 +33,8 @@ public class ClashMonitor implements GameEvent, Runnable{
     }
 
     public void ifMyTankIsShot(MyTank myTank, Vector<Bullet> enemyBullets) {
-
+        for (Bullet b : enemyBullets) {
+            
+        }
     }
 }
