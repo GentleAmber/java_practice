@@ -28,6 +28,7 @@ public class MyBulletManager implements Runnable, GameEventListener{
                         myBullets.remove(i);
                         i--;
                         sizeNum--;
+                        System.out.println("My bullets left: " + sizeNum);
                     }
                 }
             }
