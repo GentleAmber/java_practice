@@ -1,0 +1,13 @@
+3、对象处理流
+ObjectOutputStream和ObjectInputStream是对象处理流。存储对象类型+值。注意对象的属性fields也必须是serializable才能被读写。且写入和读取的顺序需要一致，否则报类型错误。
+
+4、标准输入输出流
+System.in 标准输入，默认输入设备：键盘。类型：InputStream（字节处理流）
+System.out 标准输出，默认输出设备：显示器。类型：PrintStream（字节处理流）
+
+5、转换流
+InputStreamReader: Reader的子类，将字节流包装成字符流。对应的是OutputStreamWriter。
+在使用时可以指定编码格式：如utf-8、gbk等
+
+6、打印流
+PrintStream（字节）和PrintWriter（字符）。打印流只有输出流没有输入流
