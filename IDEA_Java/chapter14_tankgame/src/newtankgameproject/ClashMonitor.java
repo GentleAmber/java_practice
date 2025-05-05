@@ -5,10 +5,9 @@ import java.util.Vector;
 public class ClashMonitor implements GameEvent, Runnable{
     @Override
     public void run() {
-        System.out.println("Clash monitor starts.");
         while (true) {
             ifEnemyIsShot(EnemyTankManager.getEnemyTanksCopy(), MyBulletManager.getMyBulletsCopy());
-//        ifMyTankIsShot(MyPanel.getMyTank(), EnemyBulletManager.getEnemyBullets());
+            ifMyTankIsShot(EnemyBulletManager.getEnemyBulletsCopy());
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
@@ -32,9 +31,14 @@ public class ClashMonitor implements GameEvent, Runnable{
         }
     }
 
-    public void ifMyTankIsShot(MyTank myTank, Vector<Bullet> enemyBullets) {
+    public void ifMyTankIsShot(Vector<Bullet> enemyBullets) {
         for (Bullet b : enemyBullets) {
-            
+            MyTank myTank = MyPanel.myTank;
+            if (myTank.getStatus() == Tank.Status.ALIVE &&
+                    b.getX() >= myTank.getX() && b.getX() <= myTank.getX() + 50
+                    && b.getY() >= myTank.getY() && b.getY() <= myTank.getY() + 50) {
+                GameEventBus.post(new Event_MyTankGetsShot(b));
+            }
         }
     }
 }

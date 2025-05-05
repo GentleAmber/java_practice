@@ -5,6 +5,7 @@ public class EnemyTank extends Tank implements Runnable{
         super(x, y);
         this.setMyTank(false);
         this.setDirection('d');
+        this.setTANK_MOVE_SPEED(getTANK_MOVE_SPEED() - 1);
     }
 
     public void randomMove() throws InterruptedException {

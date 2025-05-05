@@ -5,12 +5,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class MyPanel extends JPanel implements Runnable, KeyListener {
     static int width = 1000;
     static int height = 750;
     static MyTank myTank = null;
+
+    private Vector<GameEvent> gameEvents = new Vector<>();
+
     EnemyTankManager enemyTankManager = null;
     Vector<EnemyTank> enemyTanksForPanel = null;
 
@@ -27,12 +31,13 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     }
 
     public MyPanel() {
+        enemyBulletManager = new EnemyBulletManager();
+
         myTank = new MyTank(500, 600, 3);//Initialise my tank
-        enemyTankManager = new EnemyTankManager();
 
         myBulletManager = new MyBulletManager();
 
-        enemyBulletManager = new EnemyBulletManager();
+        enemyTankManager = new EnemyTankManager();
 
         clashMonitor = new ClashMonitor();
 
@@ -52,8 +57,14 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         myBulletsForPanel = MyBulletManager.getMyBulletsCopy();
         enemyBulletsForPanel = EnemyBulletManager.getEnemyBulletsCopy();
 
+        if (myTank.getStatus() == Tank.Status.ALIVE) {
+            drawTank(myTank, g, true);
+        } else if (myTank.getStatus() == Tank.Status.DYING) {
+            drawExplosionCircle(g, myTank.getX() + 25, myTank.getY() + 25,
+                    10 + myTank.getDyingCounter() * 1);
+            myTank.dyingCounterIncrement();
+        }
 
-        drawTank(myTank, g, true);
         for (EnemyTank e : enemyTanksForPanel) {
             if (e.getStatus() == Tank.Status.ALIVE)
                 drawTank(e, g, false);
@@ -71,8 +82,9 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         }
 
         for (Bullet b : enemyBulletsForPanel) {
-            if (b.isAlive())
+            if (b.isAlive()) {
                 drawBullet(g, b);
+            }
         }
 
     }
@@ -170,16 +182,18 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            myTank.moveDown();
-        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            myTank.moveUp();
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            myTank.moveLeft();
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            myTank.moveRight();
-        } else if (e.getKeyCode() == KeyEvent.VK_J) {
-            GameEventBus.post(new Event_MyTankShoots(myTank));
+        if (myTank.getStatus() == Tank.Status.ALIVE) {
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                myTank.moveDown();
+            } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                myTank.moveUp();
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                myTank.moveLeft();
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                myTank.moveRight();
+            } else if (e.getKeyCode() == KeyEvent.VK_J) {
+                GameEventBus.post(new Event_MyTankShoots(myTank));
+            }
         }
     }
 
@@ -187,4 +201,7 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
+
+
 }

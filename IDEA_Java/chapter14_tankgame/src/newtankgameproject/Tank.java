@@ -15,6 +15,9 @@ public class Tank {
     private int dyingCounter = 0;
 
 
+    public void setTANK_MOVE_SPEED(int TANK_MOVE_SPEED) {
+        this.TANK_MOVE_SPEED = TANK_MOVE_SPEED;
+    }
 
     public void moveDown() {
         if (getY() + TANK_MOVE_SPEED + 100 < MyPanel.height) {

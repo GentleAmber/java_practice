@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class MyBulletManager implements Runnable, GameEventListener{
 
-    private static final Vector<Bullet> myBullets = new Vector<>();
+    static final Vector<Bullet> myBullets = new Vector<>();
     private int maxBulletNum = 5;
     private ArrayList<GameEvent> gameEvents = new ArrayList<>();
 

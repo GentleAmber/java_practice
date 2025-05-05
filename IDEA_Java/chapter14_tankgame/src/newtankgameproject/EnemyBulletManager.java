@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class EnemyBulletManager implements GameEventListener, Runnable{
 
-    private static final Vector<Bullet> enemyBullets = new Vector<>();
+    static final Vector<Bullet> enemyBullets = new Vector<>();
     private ArrayList<GameEvent> gameEvents = new ArrayList<>();
     private int maxBulletSize = 20;
 
@@ -54,6 +54,12 @@ public class EnemyBulletManager implements GameEventListener, Runnable{
                         Bullet enemyBullet = ((Event_EnemyTankShoots) event).enemyBullet;
                         enemyBullets.add(enemyBullet);
                     }
+                } else if (event instanceof Event_MyTankGetsShot) {
+                    System.out.println(System.currentTimeMillis() + ": EnemyBulletManager receives event MyTankGetsShot.");
+                    Bullet enemyBullet = ((Event_MyTankGetsShot) event).enemyBullet;
+                    enemyBullets.remove(enemyBullet);
+                    System.out.println(System.currentTimeMillis() + ": " + enemyBullet +
+                            " is removed.");
                 }
             }
 
