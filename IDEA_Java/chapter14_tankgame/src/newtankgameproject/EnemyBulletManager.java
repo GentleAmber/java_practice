@@ -1,13 +1,19 @@
 package newtankgameproject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class EnemyBulletManager implements GameEventListener, Runnable{
 
     private static final Vector<Bullet> enemyBullets = new Vector<>();
+    private ArrayList<GameEvent> gameEvents = new ArrayList<>();
+    private int maxBulletSize = 20;
 
-    public static Vector<Bullet> getEnemyBullets() {
-        return enemyBullets;
+    public static Vector<Bullet> getEnemyBulletsCopy() {
+        Vector<Bullet> enemyBulletsCopy = (Vector<Bullet>) enemyBullets.clone();
+        return enemyBulletsCopy;
+
     }
 
     public EnemyBulletManager() {
@@ -16,29 +22,50 @@ public class EnemyBulletManager implements GameEventListener, Runnable{
 
     @Override
     public void onEvent(GameEvent event) {
-        if (event instanceof EnemyTankShoots) {
-            Bullet enemyBullet = ((EnemyTankShoots) event).enemyBullet;
-            enemyBullets.add(enemyBullet);
+        synchronized (gameEvents) {
+            gameEvents.add(event);
+        }
+    }
+
+    public void checkEnemyBullets() {
+        int sizeNum = enemyBullets.size();
+        if (sizeNum > 0) {
+            for (int i = 0; i < sizeNum; i++) {
+                Bullet bullet = enemyBullets.get(i);
+                if (bullet.isAlive())
+                    bullet.move();
+                else {
+                    enemyBullets.remove(i);
+                    i--;
+                    sizeNum--;
+                }
+            }
+        }
+    }
+
+    public void checkGameEvents() {
+        synchronized (gameEvents) {
+            Iterator<GameEvent> iterator = gameEvents.iterator();
+
+            while (iterator.hasNext()) {
+                GameEvent event = iterator.next();
+                if (event instanceof Event_EnemyTankShoots) {
+                    if (enemyBullets.size() < maxBulletSize) {
+                        Bullet enemyBullet = ((Event_EnemyTankShoots) event).enemyBullet;
+                        enemyBullets.add(enemyBullet);
+                    }
+                }
+            }
+
+            gameEvents.clear();
         }
     }
 
     @Override
     public void run() {
         while (true) {
-            int sizeNum = enemyBullets.size();
-            if (sizeNum > 0) {
-                for (int i = 0; i < sizeNum; i++) {
-                    Bullet bullet = enemyBullets.get(i);
-                    if (bullet.isAlive())
-                        bullet.move();
-                    else {
-                        enemyBullets.remove(i);
-                        i--;
-                        sizeNum--;
-                    }
-                }
-            }
-
+            checkEnemyBullets();
+            checkGameEvents();
             try {
                 Thread.sleep(30);//Keep the FPS the same as myPanel
             } catch (InterruptedException e) {

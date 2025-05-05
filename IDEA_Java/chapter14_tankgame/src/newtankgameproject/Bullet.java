@@ -83,6 +83,6 @@ public class Bullet {
 
     @Override
     public String toString() {
-        return "Bullet(" + this.getX() + ", " + this.getY() + ")";
+        return "Bullet(" + this.getX() + ", " + this.getY() + ")" + hashCode();
     }
 }

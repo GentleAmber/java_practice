@@ -1,67 +1,80 @@
 package newtankgameproject;
 
-public class EnemyTank extends Tank{
-    public EnemyTank(int x, int y, MyPanel myPanel) {
-        super(x, y, myPanel);
+public class EnemyTank extends Tank implements Runnable{
+    public EnemyTank(int x, int y) {
+        super(x, y);
         this.setMyTank(false);
         this.setDirection('d');
     }
 
     public void randomMove() throws InterruptedException {
-        //Pass the size of the panel into randomMove
 
-        //Think for a random time before moving
-        Thread.sleep((int)(Math.random() * 800) + 200);
+        //Decide whether or not to move
+        if (Math.random() < 0.2)
+            return;
+
         //Decide a random direction first
         int randomNum = (int)(Math.random() * 4);//[0,4)
-
-        //Decide a number, the tank moves the distance of this number * TANK_MOVE_SPEED
-        int randomNumForDistance = (int)(Math.random() * 8);
+        int randomMoveTimes = (int)(Math.random() * 20 + 5);
+        int distance = getTANK_MOVE_SPEED() * randomMoveTimes;
 
         switch (randomNum) {
             case 0:
                 this.setDirection('u');
-                for (int i = 0; i < randomNumForDistance; i++) {
-                    if (this.getY() - this.getTANK_MOVE_SPEED() < 0) {
-                        break;
-                    } else {
-                        this.setY(this.getY() - this.getTANK_MOVE_SPEED());
+
+                for (int i = 0; i < randomMoveTimes; i++) {
+                    if (this.getY() - getTANK_MOVE_SPEED() >= 0) {
+                        this.setY(this.getY() - getTANK_MOVE_SPEED());
                         Thread.sleep(30);
-                    }
+                    } else
+                        break;
                 }
+
                 break;
+
             case 1:
                 this.setDirection('r');
-                for (int i = 0; i < randomNumForDistance; i++) {
-                    if (this.getX() + 50 + this.getTANK_MOVE_SPEED() > this.panelWidth) {
-                        break;
-                    } else {
-                        this.setX(this.getX() + this.getTANK_MOVE_SPEED());
+
+//                if (this.getX() + 50 + this.getTANK_MOVE_SPEED() <= this.panelWidth)
+//                    this.setX(this.getX() + this.getTANK_MOVE_SPEED());
+
+                for (int i = 0; i < randomMoveTimes; i++) {
+                    if (this.getX() +50 + getTANK_MOVE_SPEED() <= MyPanel.width) {
+                        this.setX(this.getX() + getTANK_MOVE_SPEED());
                         Thread.sleep(30);
-                    }
+                    } else
+                        break;
                 }
+
                 break;
+
             case 2:
                 this.setDirection('d');
-                for (int i = 0; i < randomNumForDistance; i++) {
-                    if (this.getY() + 50 + this.getTANK_MOVE_SPEED() > this.panelHeight) {
-                        break;
-                    } else {
-                        this.setY(this.getY() + this.getTANK_MOVE_SPEED());
+
+//                if (this.getY() + 50 + this.getTANK_MOVE_SPEED() <= MyPanel.height)
+//                    this.setY(this.getY() + this.getTANK_MOVE_SPEED());
+                for (int i = 0; i < randomMoveTimes; i++) {
+                    if (this.getY() +50 + getTANK_MOVE_SPEED() <= MyPanel.height) {
+                        this.setY(this.getY() + getTANK_MOVE_SPEED());
                         Thread.sleep(30);
-                    }
+                    } else
+                        break;
                 }
+
                 break;
+
             case 3:
                 this.setDirection('l');
-                for (int i = 0; i < randomNumForDistance; i++) {
-                    if (this.getX() - this.getTANK_MOVE_SPEED() < 0) {
+//                if (this.getX() - this.getTANK_MOVE_SPEED() >= 0)
+//                    this.setX(this.getX() - this.getTANK_MOVE_SPEED());
+                for (int i = 0; i < randomMoveTimes; i++) {
+                    if (this.getX() - getTANK_MOVE_SPEED() >= 0) {
+                        this.setX(this.getX() - getTANK_MOVE_SPEED());
+                        Thread.sleep(50);
+                    } else
                         break;
-                    } else {
-                        this.setX(this.getX() - this.getTANK_MOVE_SPEED());
-                        Thread.sleep(30);
-                    }
                 }
+
                 break;
         }
 
@@ -69,18 +82,41 @@ public class EnemyTank extends Tank{
     }
 
     public void randomShoot() throws InterruptedException {
-        //Think for a random time before shooting
-        Thread.sleep((int)(Math.random() * 350) + 50);
+        //Decide whether or not to shoot
+        if (Math.random() < 0.5)
+            return;
+
         //Decide a number, the tank shoots this many bullets this time
-        int bulletsShot = (int)(Math.random() * 3) + 1;
-        for (int i = 0; i < bulletsShot; i++) {
-            GameEventBus.post(new EnemyTankShoots(this));
-            Thread.sleep(150);
+        int bulletsNum = (int) (Math.random() * 3 + 1);
+
+        for (int i = 0; i < bulletsNum; i++) {
+            GameEventBus.post(new Event_EnemyTankShoots(this));
         }
+
+
     }
 
     @Override
     public String toString() {
-        return "EnemyTank(" + this.getX() + ", " + this.getY() + ")";
+        return "EnemyTank(" + this.getX() + ", " + this.getY() + ")"
+                 + hashCode();
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                randomMove();
+                randomShoot();
+                Thread.sleep(150 + (int)(Math.random() * 400));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            if (getStatus() != Status.ALIVE) {
+                break;
+            }
+        }
     }
 }

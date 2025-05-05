@@ -1,10 +1,10 @@
 package newtankgameproject;
 
-public class MyTankShoots implements GameEvent{
+public class Event_MyTankShoots implements GameEvent{
     public MyTank myTank;
     public Bullet myBullet;
 
-    public MyTankShoots(MyTank mytank) {
+    public Event_MyTankShoots(MyTank mytank) {
         this.myTank = mytank;
         myBullet = new Bullet(mytank.getX(), mytank.getY(), mytank.getDirection());
         switch (myBullet.getDirection()) {

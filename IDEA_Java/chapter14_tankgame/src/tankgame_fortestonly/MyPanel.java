@@ -1,4 +1,4 @@
-package newtankgameproject;
+package tankgame_fortestonly;
 
 
 import javax.swing.*;
@@ -7,57 +7,43 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 
+// MyPanel serves as the NPC control center. Enemy tanks, my bullets, enemy bullets
+// are all stored here.
 public class MyPanel extends JPanel implements Runnable, KeyListener {
+
     static int width = 1000;
     static int height = 750;
-    static MyTank myTank = null;
-    EnemyTankManager enemyTankManager = null;
-    Vector<EnemyTank> enemyTanksForPanel = null;
+    private int playerScore = 0;
+    private static MyTank myTank = null;
 
-    MyBulletManager myBulletManager = null;
-    Vector<Bullet> myBulletsForPanel = null;
+    Vector<EnemyTank> enemyTanks;
+    Vector<Bullet> myBullets;
+    Vector<Bullet> enemyBullets;
 
-    EnemyBulletManager enemyBulletManager = null;
-    Vector<Bullet> enemyBulletsForPanel = null;
-
-    ClashMonitor clashMonitor = null;
-
-    public static MyTank getMyTank() {
-        return myTank;
-    }
 
     public MyPanel() {
-        myTank = new MyTank(500, 600, 3);//Initialise my tank
-        enemyTankManager = new EnemyTankManager();
+        myTank = new MyTank(500, 600, 3, width, height);
+        NPCControlCenter npcControlCenter = NPCControlCenter.getInstance();
+        enemyTanks = npcControlCenter.getEnemyTanks();
+        myBullets = npcControlCenter.getMyBullets();
+        enemyBullets = npcControlCenter.getEnemyBullets();
 
-        myBulletManager = new MyBulletManager();
+        new Thread(npcControlCenter).start();
 
-        enemyBulletManager = new EnemyBulletManager();
-
-        clashMonitor = new ClashMonitor();
-
-        new Thread(enemyTankManager).start();
-        new Thread(myBulletManager).start();
-        new Thread(enemyBulletManager).start();
-        new Thread(clashMonitor).start();
 
     }
 
     @Override
-    public void paint(Graphics g) {//Graphics is like the painting tool
+    public void paint(Graphics g) {
         super.paint(g);
         g.fillRect(0, 0, width, height);//Draw the background. By default the colour is black
-        //Take a snapshot of everything and draw them
-        enemyTanksForPanel = EnemyTankManager.getEnemyTanksCopy();
-        myBulletsForPanel = MyBulletManager.getMyBulletsCopy();
-        enemyBulletsForPanel = EnemyBulletManager.getEnemyBulletsCopy();
-
-
+        //Draw the tanks - method encapsulated
         drawTank(myTank, g, true);
-        for (EnemyTank e : enemyTanksForPanel) {
+        for (EnemyTank e : enemyTanks) {
             if (e.getStatus() == Tank.Status.ALIVE)
                 drawTank(e, g, false);
             else if (e.getStatus() == Tank.Status.DYING) {
+                drawTank(e, g, false);
                 //Explosion on top of the tank
                 drawExplosionCircle(g, e.getX() + 25, e.getY() + 25,
                         10 + e.getDyingCounter() * 1);
@@ -65,18 +51,16 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
             }
         }
 
-        for (Bullet b : myBulletsForPanel) {
+        for (Bullet b : myBullets) {
             if (b.isAlive())
                 drawBullet(g, b);
         }
 
-        for (Bullet b : enemyBulletsForPanel) {
+        for (Bullet b : enemyBullets) {
             if (b.isAlive())
                 drawBullet(g, b);
         }
-
     }
-
     public void drawTank(Tank tank, Graphics g, boolean isMyTank) {
         //Decide the tank's colour according to their type
         if (isMyTank) { //my tank
@@ -123,6 +107,13 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    public void drawExplosionCircle(Graphics g, int centerX, int centerY, int radius) {
+        g.setColor(Color.WHITE);
+        g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+        g.setColor(Color.RED);
+        g.drawOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+    }
+
     public void drawBullet(Graphics g, Bullet b) {
         g.setColor(Color.WHITE);
         int x = b.getX();
@@ -143,13 +134,6 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void drawExplosionCircle(Graphics g, int centerX, int centerY, int radius) {
-        g.setColor(Color.WHITE);
-        g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
-        g.setColor(Color.RED);
-        g.drawOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
-    }
-
     @Override
     public void run() {
         while (true) {
@@ -158,7 +142,6 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             this.repaint();
         }
     }
@@ -179,7 +162,7 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             myTank.moveRight();
         } else if (e.getKeyCode() == KeyEvent.VK_J) {
-            GameEventBus.post(new Event_MyTankShoots(myTank));
+            GameEventBus.post(new GameEvent_MyTankShoots(myTank));
         }
     }
 

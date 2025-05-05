@@ -7,7 +7,7 @@ public class ClashMonitor implements GameEvent, Runnable{
     public void run() {
         System.out.println("Clash monitor starts.");
         while (true) {
-            ifEnemyIsShot(EnemyTankManager.getEnemyTanks(), MyBulletManager.getMyBullets());
+            ifEnemyIsShot(EnemyTankManager.getEnemyTanksCopy(), MyBulletManager.getMyBulletsCopy());
 //        ifMyTankIsShot(MyPanel.getMyTank(), EnemyBulletManager.getEnemyBullets());
             try {
                 Thread.sleep(30);
@@ -20,10 +20,10 @@ public class ClashMonitor implements GameEvent, Runnable{
         for (EnemyTank eTank : enemyTanks) {
             for (Bullet b : myBullets) {
                 if (b.getX() >= eTank.getX() && b.getX() <= eTank.getX() + 50
-                && b.getY() >= eTank.getY() && b.getY() <= eTank.getY() + 50) {
+                        && b.getY() >= eTank.getY() && b.getY() <= eTank.getY() + 50) {
                     //If it hits
                     System.out.println(eTank + " gets shot by" + b);
-                    GameEventBus.post(new EnemyTankGetsShot(eTank, b));
+                    GameEventBus.post(new Event_EnemyTankGetsShot(eTank, b));
                     // When this event is posted, the two vectors here will soon be changed
                     // so the loop cannot continue. It has to quit and wait for the next loop
                     return;

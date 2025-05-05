@@ -1,12 +1,12 @@
-package newtankgameproject;
+package tankgame_fortestonly;
 
 public class MyTank extends Tank{
     private int life;
-    public MyTank(int x, int y, int life) {
-        super(x, y);
+    public MyTank(int x, int y, int life, int width, int height) {
+        super(x, y, width, height);
+        this.life = life;
         this.setMyTank(true);
         this.setDirection('u');
-        this.setLife(life);
     }
 
     public int getLife() {

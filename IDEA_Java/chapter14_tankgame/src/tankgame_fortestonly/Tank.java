@@ -1,5 +1,4 @@
-package newtankgameproject;
-
+package tankgame_fortestonly;
 
 public class Tank {
     private int x;
@@ -8,16 +7,17 @@ public class Tank {
     private int TANK_MOVE_SPEED = 5;
 //    private boolean isAlive = true;
     private boolean isMyTank;
-    private  Status status = Status.ALIVE;
+    private Tank.Status status = Status.ALIVE;
     enum Status{
         ALIVE, DYING, DEAD
     }
     private int dyingCounter = 0;
 
-
+    int panelWidth;
+    int panelHeight;
 
     public void moveDown() {
-        if (getY() + TANK_MOVE_SPEED + 100 < MyPanel.height) {
+        if (getY() + TANK_MOVE_SPEED + 100 <  panelHeight) {
             this.setY(getY() + TANK_MOVE_SPEED);
         }
         this.setDirection('d');
@@ -39,7 +39,7 @@ public class Tank {
     }
 
     public void moveRight() {
-        if (getX() + 60 + TANK_MOVE_SPEED < MyPanel.width) {
+        if (getX() + 60 + TANK_MOVE_SPEED < panelWidth) {
             this.setX(getX() + TANK_MOVE_SPEED);
         }
         this.setDirection('r');
@@ -50,9 +50,11 @@ public class Tank {
     }
 
 
-    public Tank(int x, int y) {
+    public Tank(int x, int y, int width, int height) {
         this.setX(x);
         this.setY(y);
+        this.panelWidth = width;
+        this.panelHeight = height;
     }
 
     public boolean isMyTank() {
