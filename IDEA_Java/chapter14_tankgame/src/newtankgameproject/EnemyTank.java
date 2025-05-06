@@ -1,5 +1,9 @@
 package newtankgameproject;
 
+import com.sun.deploy.config.VerboseDefaultConfig;
+
+import java.util.Vector;
+
 public class EnemyTank extends Tank implements Runnable{
     public EnemyTank(int x, int y) {
         super(x, y);
@@ -17,14 +21,14 @@ public class EnemyTank extends Tank implements Runnable{
         //Decide a random direction first
         int randomNum = (int)(Math.random() * 4);//[0,4)
         int randomMoveTimes = (int)(Math.random() * 20 + 5);
-        int distance = getTANK_MOVE_SPEED() * randomMoveTimes;
 
         switch (randomNum) {
             case 0:
                 this.setDirection('u');
 
                 for (int i = 0; i < randomMoveTimes; i++) {
-                    if (this.getY() - getTANK_MOVE_SPEED() >= 0) {
+                    if (collisionDetect('u', EnemyTankManager.enemyTanks,
+                            MyPanel.myTank, MyPanel.width, MyPanel.height)) {
                         this.setY(this.getY() - getTANK_MOVE_SPEED());
                         Thread.sleep(30);
                     } else
@@ -40,7 +44,8 @@ public class EnemyTank extends Tank implements Runnable{
 //                    this.setX(this.getX() + this.getTANK_MOVE_SPEED());
 
                 for (int i = 0; i < randomMoveTimes; i++) {
-                    if (this.getX() +50 + getTANK_MOVE_SPEED() <= MyPanel.width) {
+                    if (collisionDetect('r', EnemyTankManager.enemyTanks,
+                            MyPanel.myTank, MyPanel.width, MyPanel.height)) {
                         this.setX(this.getX() + getTANK_MOVE_SPEED());
                         Thread.sleep(30);
                     } else
@@ -55,7 +60,8 @@ public class EnemyTank extends Tank implements Runnable{
 //                if (this.getY() + 50 + this.getTANK_MOVE_SPEED() <= MyPanel.height)
 //                    this.setY(this.getY() + this.getTANK_MOVE_SPEED());
                 for (int i = 0; i < randomMoveTimes; i++) {
-                    if (this.getY() +50 + getTANK_MOVE_SPEED() <= MyPanel.height) {
+                    if (collisionDetect('d', EnemyTankManager.enemyTanks,
+                            MyPanel.myTank, MyPanel.width, MyPanel.height)) {
                         this.setY(this.getY() + getTANK_MOVE_SPEED());
                         Thread.sleep(30);
                     } else
@@ -69,7 +75,8 @@ public class EnemyTank extends Tank implements Runnable{
 //                if (this.getX() - this.getTANK_MOVE_SPEED() >= 0)
 //                    this.setX(this.getX() - this.getTANK_MOVE_SPEED());
                 for (int i = 0; i < randomMoveTimes; i++) {
-                    if (this.getX() - getTANK_MOVE_SPEED() >= 0) {
+                    if (collisionDetect('l', EnemyTankManager.enemyTanks,
+                            MyPanel.myTank, MyPanel.width, MyPanel.height)) {
                         this.setX(this.getX() - getTANK_MOVE_SPEED());
                         Thread.sleep(50);
                     } else
@@ -93,8 +100,6 @@ public class EnemyTank extends Tank implements Runnable{
         for (int i = 0; i < bulletsNum; i++) {
             GameEventBus.post(new Event_EnemyTankShoots(this));
         }
-
-
     }
 
     @Override
@@ -119,5 +124,97 @@ public class EnemyTank extends Tank implements Runnable{
                 break;
             }
         }
+    }
+
+    boolean collisionDetect(char direction, Vector<EnemyTank> enemyTanks, Tank myTank,
+                            int panelWidth, int panelHeight) {
+        int newX;
+        int newY;
+        Vector<Tank> allOtherTanks = new Vector<>();
+        allOtherTanks.add(myTank);
+        for (EnemyTank e : enemyTanks) {
+            allOtherTanks.add(e);
+        }
+
+        switch (direction) {
+            case 'u':
+                newX = getX();
+                newY = getY() - getTANK_MOVE_SPEED();
+
+                for (Tank t : allOtherTanks) {
+                    // Check collision with other tanks
+                    if ((newX >= t.getX() && newX <= t.getX() + 50
+                    && newY >= t.getY() && newY <= t.getY() + 50)
+                    || (newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                    && newY >= t.getY() && newY <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                // Check collision with the frame
+                if (newY < 0)
+                    return false;
+
+                break;
+
+            case 'd':
+                newX = getX();
+                newY = getY() + getTANK_MOVE_SPEED();
+
+                for (Tank t : allOtherTanks) {
+                    if ((newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                    && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)
+                    || (newX >= t.getX() && newX <= t.getX() + 50
+                    && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                if (newY + 50 > panelHeight)
+                    return false;
+
+                break;
+
+            case 'r':
+                newX = getX() + getTANK_MOVE_SPEED();
+                newY = getY();
+
+                for (Tank t : allOtherTanks) {
+                    if ((newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                    && newY >= t.getY() && newY <= t.getY() + 50)
+                    ||(newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                    && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                if (newX + 50 > panelWidth)
+                    return false;
+
+                break;
+
+            case 'l':
+                newX = getX() - getTANK_MOVE_SPEED();
+                newY = getY();
+
+                for (Tank t : allOtherTanks) {
+                    if ((newX >= t.getX() && newX <= t.getX() + 50
+                            && newY >= t.getY() && newY <= t.getY() + 50)
+                            ||(newX >= t.getX() && newX <= t.getX() + 50
+                            && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                if (newX < 0)
+                    return false;
+
+
+        }
+        return true;
     }
 }
