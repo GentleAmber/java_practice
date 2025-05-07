@@ -89,10 +89,18 @@ public class Game extends JFrame implements GameEventListener{
             e.printStackTrace();
         }
 
+        MyBulletManager.myBullets.clear();
+        EnemyBulletManager.enemyBullets.clear();
+
         score = Integer.parseInt(tankGameFile.getProperty("Score"));
+        myPanel.setScoreForPanel(score);
+
         int enemyTankNum = Integer.parseInt(tankGameFile.getProperty("Number of enemy tanks"));
 
         Vector<EnemyTank> enemyTanks = EnemyTankManager.enemyTanks;
+        for (int i = 0; i < enemyTanks.size(); i++) {
+            enemyTanks.get(i).setStatus(Tank.Status.DEAD);
+        }
         int size = enemyTanks.size();
 
         if (size <= enemyTankNum) {
@@ -101,6 +109,7 @@ public class Game extends JFrame implements GameEventListener{
                 int enemyTankY = Integer.parseInt(tankGameFile.getProperty("EnemyTank" + i + "'s y"));
                 enemyTanks.get(i).setX(enemyTankX);
                 enemyTanks.get(i).setY(enemyTankY);
+                enemyTanks.get(i).setStatus(Tank.Status.ALIVE);
             }
 
             if (size < enemyTankNum) {
@@ -117,6 +126,8 @@ public class Game extends JFrame implements GameEventListener{
                 int enemyTankY = Integer.parseInt(tankGameFile.getProperty("EnemyTank" + i + "'s y"));
                 enemyTanks.get(i).setX(enemyTankX);
                 enemyTanks.get(i).setY(enemyTankY);
+                enemyTanks.get(i).setStatus(Tank.Status.ALIVE);
+
             }
             for (int i = enemyTankNum; i < size; i++) {
                 enemyTanks.remove(i);
