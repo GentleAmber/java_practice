@@ -5,7 +5,7 @@ import java.util.Vector;
 
 public class EnemyTankManager implements Runnable, GameEventListener{
 
-    static final Vector<EnemyTank> enemyTanks = new Vector<>();
+    static Vector<EnemyTank> enemyTanks = new Vector<>();
     private ArrayList<GameEvent> gameEvents = new ArrayList<>();
 
     public EnemyTankManager() {
@@ -46,7 +46,7 @@ public class EnemyTankManager implements Runnable, GameEventListener{
         int tankNum;
         tankNum = enemyTanks.size();
         for (int i = 0; i < tankNum; i++) {
-            EnemyTank thisTank = enemyTanks. get(i);
+            EnemyTank thisTank = enemyTanks.get(i);
 
             if (thisTank.getStatus() == Tank.Status.ALIVE) {
 //                    System.out.println(System.currentTimeMillis() + ": " +
@@ -57,7 +57,6 @@ public class EnemyTankManager implements Runnable, GameEventListener{
                 i--;
                 tankNum--;
             } else {//It's still dying
-                thisTank.isDying();
                 System.out.println(System.currentTimeMillis() + ": " + thisTank + " is dying.");
             }
         }

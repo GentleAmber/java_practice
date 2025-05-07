@@ -1,7 +1,5 @@
 package newtankgameproject;
 
-import com.sun.deploy.config.VerboseDefaultConfig;
-
 import java.util.Vector;
 
 public class EnemyTank extends Tank implements Runnable{
@@ -9,6 +7,13 @@ public class EnemyTank extends Tank implements Runnable{
         super(x, y);
         this.setMyTank(false);
         this.setDirection('d');
+        this.setTANK_MOVE_SPEED(getTANK_MOVE_SPEED() - 1);
+    }
+
+    public EnemyTank(int x, int y, char direction) {
+        super(x, y);
+        this.setMyTank(false);
+        this.setDirection(direction);
         this.setTANK_MOVE_SPEED(getTANK_MOVE_SPEED() - 1);
     }
 

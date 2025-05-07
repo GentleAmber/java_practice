@@ -12,6 +12,7 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     static int width = 1000;
     static int height = 750;
     static MyTank myTank = null;
+    private int scoreForPanel;
 
     private Vector<GameEvent> gameEvents = new Vector<>();
 
@@ -30,7 +31,7 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         return myTank;
     }
 
-    public MyPanel() {
+    public MyPanel(int scoreForPanel) {
         enemyBulletManager = new EnemyBulletManager();
 
         myTank = new MyTank(500, 600, 3);//Initialise my tank
@@ -40,6 +41,8 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
         enemyTankManager = new EnemyTankManager();
 
         clashMonitor = new ClashMonitor();
+
+        this.scoreForPanel = scoreForPanel;
 
         new Thread(enemyTankManager).start();
         new Thread(myBulletManager).start();
@@ -86,6 +89,12 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
                 drawBullet(g, b);
             }
         }
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Arial", Font.BOLD, 36));
+        String formattedScore = String.format("%05d", scoreForPanel);
+        g2d.drawString(formattedScore, 870, 45);
 
     }
 
@@ -202,6 +211,11 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
 
     }
 
+    public int getScoreForPanel() {
+        return scoreForPanel;
+    }
 
-
+    public void setScoreForPanel(int scoreForPanel) {
+        this.scoreForPanel = scoreForPanel;
+    }
 }
