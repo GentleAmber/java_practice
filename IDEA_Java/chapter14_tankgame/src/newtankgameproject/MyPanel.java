@@ -192,13 +192,17 @@ public class MyPanel extends JPanel implements Runnable, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (myTank.getStatus() == Tank.Status.ALIVE) {
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if (e.getKeyCode() == KeyEvent.VK_DOWN &&
+                    myTank.collisionDetect('d', EnemyTankManager.enemyTanks, myTank, width, height)) {
                 myTank.moveDown();
-            } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            } else if (e.getKeyCode() == KeyEvent.VK_UP &&
+                    myTank.collisionDetect('u', EnemyTankManager.enemyTanks, myTank, width, height)) {
                 myTank.moveUp();
-            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT &&
+                    myTank.collisionDetect('l', EnemyTankManager.enemyTanks, myTank, width, height)) {
                 myTank.moveLeft();
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT &&
+                    myTank.collisionDetect('r', EnemyTankManager.enemyTanks, myTank, width, height)) {
                 myTank.moveRight();
             } else if (e.getKeyCode() == KeyEvent.VK_J) {
                 GameEventBus.post(new Event_MyTankShoots(myTank));

@@ -1,6 +1,8 @@
 package newtankgameproject;
 
 
+import java.util.Vector;
+
 public class Tank {
     private int x;
     private int y;
@@ -13,6 +15,98 @@ public class Tank {
         ALIVE, DYING, DEAD
     }
     private int dyingCounter = 0;
+
+    boolean collisionDetect(char direction, Vector<EnemyTank> enemyTanks, Tank myTank,
+                            int panelWidth, int panelHeight) {
+        int newX;
+        int newY;
+        Vector<Tank> allOtherTanks = new Vector<>();
+        allOtherTanks.add(myTank);
+        for (EnemyTank e : enemyTanks) {
+            allOtherTanks.add(e);
+        }
+
+        switch (direction) {
+            case 'u':
+                newX = getX();
+                newY = getY() - getTANK_MOVE_SPEED();
+
+                for (Tank t : allOtherTanks) {
+                    // Check collision with other tanks
+                    if ((newX >= t.getX() && newX <= t.getX() + 50
+                            && newY >= t.getY() && newY <= t.getY() + 50)
+                            || (newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                            && newY >= t.getY() && newY <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                // Check collision with the frame
+                if (newY < 0)
+                    return false;
+
+                break;
+
+            case 'd':
+                newX = getX();
+                newY = getY() + getTANK_MOVE_SPEED();
+
+                for (Tank t : allOtherTanks) {
+                    if ((newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                            && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)
+                            || (newX >= t.getX() && newX <= t.getX() + 50
+                            && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                if (newY + 50 > panelHeight)
+                    return false;
+
+                break;
+
+            case 'r':
+                newX = getX() + getTANK_MOVE_SPEED();
+                newY = getY();
+
+                for (Tank t : allOtherTanks) {
+                    if ((newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                            && newY >= t.getY() && newY <= t.getY() + 50)
+                            ||(newX + 50 >= t.getX() && newX + 50 <= t.getX() + 50
+                            && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                if (newX + 50 > panelWidth)
+                    return false;
+
+                break;
+
+            case 'l':
+                newX = getX() - getTANK_MOVE_SPEED();
+                newY = getY();
+
+                for (Tank t : allOtherTanks) {
+                    if ((newX >= t.getX() && newX <= t.getX() + 50
+                            && newY >= t.getY() && newY <= t.getY() + 50)
+                            ||(newX >= t.getX() && newX <= t.getX() + 50
+                            && newY + 50 >= t.getY() && newY + 50 <= t.getY() + 50)) {
+                        return false;
+                    } else
+                        continue;
+                }
+
+                if (newX < 0)
+                    return false;
+
+
+        }
+        return true;
+    }
 
 
     public void setTANK_MOVE_SPEED(int TANK_MOVE_SPEED) {
