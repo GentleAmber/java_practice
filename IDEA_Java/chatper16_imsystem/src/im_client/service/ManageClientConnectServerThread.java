@@ -14,8 +14,4 @@ public class ManageClientConnectServerThread {
         return hm.get(userId);
     }
 
-    public static void terminateAllThread() {
-
-    }
-
 }

@@ -66,6 +66,24 @@ public class UserClientService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void userLogOut() {
+
+        Message message = new Message();
+        message.setMessageType(MessageType.CLIENT_EXIT);
+        message.setSender(user.getId());
+
+        // Inform the server about the log out
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Close the client and any thread that's running
+        System.exit(0);
 
     }
 }

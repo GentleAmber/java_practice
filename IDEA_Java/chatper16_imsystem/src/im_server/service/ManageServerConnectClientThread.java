@@ -1,5 +1,7 @@
 package im_server.service;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.HashMap;
 
 public class ManageServerConnectClientThread {
@@ -20,11 +22,19 @@ public class ManageServerConnectClientThread {
         } else {
             onlineUserList += "---------------------------------\n";
             for (String userId : hm.keySet()) {
-                onlineUserList += (userId + "\t");
+                onlineUserList += (userId + ", ");
             }
             onlineUserList += "\n---------------------------------";
         }
 
         return onlineUserList;
+    }
+
+    public static void closeThread (String userId) {
+        ServerConnectClientThread thread = hm.get(userId);
+        thread.setLoop(false);
+
+        hm.remove(userId);
+        System.out.println(userId + " has logged out.");
     }
 }

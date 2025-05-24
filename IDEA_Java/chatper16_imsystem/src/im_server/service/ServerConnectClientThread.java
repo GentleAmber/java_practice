@@ -12,6 +12,23 @@ public class ServerConnectClientThread implements Runnable{
 
     private Socket socket;
     private String userId;// So that server knows who it's connecting to via this socket
+    private boolean loop = true;
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
 
     public ServerConnectClientThread(Socket socket, String userId) {
         this.socket = socket;
@@ -22,7 +39,7 @@ public class ServerConnectClientThread implements Runnable{
     @Override
     public void run() {
         System.out.println("Communicating with " + userId + "...");
-        while (true) {
+        while (loop) {
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message ms = (Message) ois.readObject();
@@ -37,10 +54,22 @@ public class ServerConnectClientThread implements Runnable{
                         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                         oos.writeObject(returnedMessage);
                         break;
+
+                    case MessageType.CLIENT_EXIT:
+                        String userId = ms.getSender();
+                        ManageServerConnectClientThread.closeThread(userId);
+
+
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

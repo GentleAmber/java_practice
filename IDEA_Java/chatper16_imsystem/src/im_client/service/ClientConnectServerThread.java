@@ -9,6 +9,15 @@ import java.net.Socket;
 
 public class ClientConnectServerThread implements Runnable{
     private Socket socket;
+    private boolean loop = true;
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
 
     public ClientConnectServerThread(Socket socket) {
         this.socket = socket;
@@ -25,7 +34,7 @@ public class ClientConnectServerThread implements Runnable{
     // Keep listening from the server
     @Override
     public void run() {
-        while (true) {
+        while (loop) {
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message ms = (Message) ois.readObject();
@@ -40,7 +49,12 @@ public class ClientConnectServerThread implements Runnable{
                 e.printStackTrace();
             }
 
+        }
 
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

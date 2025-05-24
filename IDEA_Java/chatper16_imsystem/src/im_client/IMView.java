@@ -12,6 +12,7 @@ public class IMView {
 
     public static void main(String[] args) {
         new IMView().mainMenu();
+        System.out.println("Exits successfully. See you again.");
     }
 
     public void mainMenu() {
@@ -60,6 +61,7 @@ public class IMView {
                                     break;
                                 case "9" :
                                     loop = false;
+                                    userClientService.userLogOut();
                                     break;
                                 default :
                                     System.out.println("Wrong input. Please enter again.");
