@@ -43,6 +43,7 @@ public class ServerConnectClientThread implements Runnable{
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message ms = (Message) ois.readObject();
+                ObjectOutputStream oos = null;
 
                 switch (ms.getMessageType()) {
                     case MessageType.GET_ONLINE_USER:
@@ -51,13 +52,33 @@ public class ServerConnectClientThread implements Runnable{
                         returnedMessage.setContent(onlineUserList);
                         returnedMessage.setMessageType(MessageType.RETURN_ONLINE_USER);
 
-                        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                        oos = new ObjectOutputStream(socket.getOutputStream());
                         oos.writeObject(returnedMessage);
                         break;
 
                     case MessageType.CLIENT_EXIT:
                         String userId = ms.getSender();
                         ManageServerConnectClientThread.closeThread(userId);
+                        break;
+
+                    case MessageType.COMM_MES:
+                        Message returnedMs = new Message();
+
+                        // First verify if the receiver is online/valid
+                        if (ManageServerConnectClientThread.ifUserOnline(ms.getReceiver())) {
+                            Message message = new Message(ms.getSender(), ms.getReceiver(), ms.getContent(), ms.getMessageType());
+                            oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(ms.getReceiver()).getSocket().getOutputStream());
+                            oos.writeObject(message);
+
+                            // Tells the sender the message was sent successfully
+                            returnedMs.setMessageType(MessageType.COMM_MES_SENT_SUCCEED);
+                        } else {
+                            returnedMs.setMessageType(MessageType.COMM_MES_SENT_FAIL);
+                        }
+
+                        oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(ms.getSender()).getSocket().getOutputStream());
+                        oos.writeObject(returnedMs);
+                        break;
 
 
                 }

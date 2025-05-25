@@ -1,7 +1,10 @@
 package im_client;
 
+import im_client.service.ManageClientConnectServerThread;
 import im_client.service.UserClientService;
+import im_server.service.ManageServerConnectClientThread;
 
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class IMView {
@@ -34,9 +37,9 @@ public class IMView {
                     String pwd = scanner.next();
 
                     if (userClientService.verifyLogin(userId, pwd)) {
-                        System.out.println("======= Welcome, " + userId + " =======");
                         // Go into the secondary menu
                         while (loop) {
+                            System.out.println("======= Welcome, " + userId + " =======");
                             System.out.println("\t\t 1 Display online user list");
                             System.out.println("\t\t 2 Message all");
                             System.out.println("\t\t 3 Message someone");
@@ -55,7 +58,32 @@ public class IMView {
                                     break;
                                 case "2" :
                                     break;
-                                case "3" :
+                                case "3" :// Message someone
+                                    // First get a list of online users
+                                    userClientService.requestOnlineUserList();
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    System.out.print("Enter the id of the online user you want to message: ");
+                                    String receiverId = scanner.next();
+                                    // Prevent the user from entering his own id
+                                    if (receiverId.equals(userId)) {
+                                        System.out.println("Cannot send message to your self.");
+                                    } else {
+                                        System.out.println("Enter the content (one line) you want to send: ");
+                                        Scanner contentScanner = new Scanner(System.in);
+                                        String content = contentScanner.nextLine();
+                                        userClientService.messageUser(receiverId, content);
+                                        try {
+                                            Thread.sleep(500);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
                                     break;
                                 case "4" :
                                     break;

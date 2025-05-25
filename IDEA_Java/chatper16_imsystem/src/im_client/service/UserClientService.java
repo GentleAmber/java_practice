@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.HashSet;
 
 // This class has the following functions:
 // 1) user login verification, 2) user registration
@@ -84,6 +86,42 @@ public class UserClientService {
 
         // Close the client and any thread that's running
         System.exit(0);
+
+    }
+
+    // Return true if message sent to a valid user, else return false.
+    public void messageUser(String userId, String content) {
+
+        Message message = new Message();
+        message.setSender(user.getId());
+        message.setReceiver(userId);
+        message.setContent(content);
+        message.setMessageType(MessageType.COMM_MES);
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public HashSet<String> copyStringHashSet(HashSet<String> hs) {
+        HashSet<String> copyHs = new HashSet<>();
+        if (hs.isEmpty()) {
+            return copyHs;
+        }
+
+        if (hs == null) {
+            return null;
+        }
+
+        for (String element : hs) {
+            copyHs.add(element);
+        }
+
+        return copyHs;
 
     }
 }

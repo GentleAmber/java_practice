@@ -6,6 +6,8 @@ import im_common.MessageType;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ClientConnectServerThread implements Runnable{
     private Socket socket;
@@ -41,8 +43,28 @@ public class ClientConnectServerThread implements Runnable{
 
                 switch (ms.getMessageType()) {
                     case MessageType.RETURN_ONLINE_USER:
+                        if (!ms.getContent().equals("")) {
+                            System.out.println("---------- Online user list ----------");
+                            System.out.println(ms.getContent());
+                        } else {
+                            System.out.println("----------- No user online -----------");
+                        }
+                        System.out.println("--------------------------------------");
+                        break;
+
+                    case MessageType.COMM_MES:
+                        System.out.println("\n" + ms.getTimestamp() + "\t" + ms.getSender());
                         System.out.println(ms.getContent());
                         break;
+
+                    case MessageType.COMM_MES_SENT_SUCCEED:
+                        System.out.println("Message sent.");
+                        break;
+
+                    case MessageType.COMM_MES_SENT_FAIL:
+                        System.out.println("Failed to send message.");
+                        break;
+
                 }
 
             } catch (IOException | ClassNotFoundException e) {
@@ -57,4 +79,5 @@ public class ClientConnectServerThread implements Runnable{
             e.printStackTrace();
         }
     }
+
 }

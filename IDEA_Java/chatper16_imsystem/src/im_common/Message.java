@@ -2,6 +2,7 @@ package im_common;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Message implements Serializable {
     private String sender;
@@ -14,13 +15,15 @@ public class Message implements Serializable {
     public Message(String sender, String receiver, String content, String messageType) {
         this.sender = sender;
         this.receiver = receiver;
-        this.timestamp = LocalDateTime.now().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+        this.timestamp = LocalDateTime.now().format(formatter);
         this.content = content;
         this.messageType = messageType;
     }
 
     public Message() {
-        this.timestamp = LocalDateTime.now().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+        this.timestamp = LocalDateTime.now().format(formatter);
     }
 
     public String getSender() {

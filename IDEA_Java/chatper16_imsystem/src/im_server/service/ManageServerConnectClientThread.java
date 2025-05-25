@@ -2,6 +2,7 @@ package im_server.service;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ManageServerConnectClientThread {
@@ -17,24 +18,24 @@ public class ManageServerConnectClientThread {
 
     public static String getOnlineUser() {
         String onlineUserList = "";
-        if (hm.keySet().isEmpty()) { // no user online
-            onlineUserList += "--------- No user online ---------";
-        } else {
-            onlineUserList += "---------------------------------\n";
+        if (!hm.keySet().isEmpty()) {
             for (String userId : hm.keySet()) {
-                onlineUserList += (userId + ", ");
+                onlineUserList += (userId + " ");
             }
-            onlineUserList += "\n---------------------------------";
         }
 
         return onlineUserList;
     }
 
-    public static void closeThread (String userId) {
+    public static void closeThread(String userId) {
         ServerConnectClientThread thread = hm.get(userId);
         thread.setLoop(false);
 
         hm.remove(userId);
         System.out.println(userId + " has logged out.");
+    }
+
+    public static boolean ifUserOnline(String userId) {
+        return hm.containsKey(userId);
     }
 }
