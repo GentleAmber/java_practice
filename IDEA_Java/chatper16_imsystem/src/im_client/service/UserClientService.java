@@ -4,11 +4,13 @@ import im_common.Message;
 import im_common.MessageType;
 import im_common.User;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -107,21 +109,44 @@ public class UserClientService {
 
     }
 
-    public HashSet<String> copyStringHashSet(HashSet<String> hs) {
-        HashSet<String> copyHs = new HashSet<>();
-        if (hs.isEmpty()) {
-            return copyHs;
+    public void messageAll(String content) {
+
+        Message message = new Message();
+        message.setMessageType(MessageType.COMM_MES_TO_ALL);
+        message.setSender(user.getId());
+        message.setContent(content);
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendFile(String receiver, String filePath, String targetPath) {
+
+        byte[] data = null;
+
+        try {
+            Path path = Paths.get(filePath);
+            data = Files.readAllBytes(path);
+            Message message = new Message(receiver, data, targetPath, MessageType.SEND_FILE);
+            message.setSender(user.getId());
+
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                oos.writeObject(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (InvalidPathException | IOException e) {
+            e.printStackTrace();
         }
 
-        if (hs == null) {
-            return null;
-        }
 
-        for (String element : hs) {
-            copyHs.add(element);
-        }
-
-        return copyHs;
 
     }
+
+
 }

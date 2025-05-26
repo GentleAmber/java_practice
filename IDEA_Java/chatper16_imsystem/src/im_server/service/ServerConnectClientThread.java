@@ -2,11 +2,13 @@ package im_server.service;
 
 import im_common.Message;
 import im_common.MessageType;
+import org.omg.CORBA.COMM_FAILURE;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Set;
 
 public class ServerConnectClientThread implements Runnable{
 
@@ -79,6 +81,44 @@ public class ServerConnectClientThread implements Runnable{
                         oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(ms.getSender()).getSocket().getOutputStream());
                         oos.writeObject(returnedMs);
                         break;
+
+                    case MessageType.COMM_MES_TO_ALL:
+                        Message returnedMs2 = new Message();
+                        // Pull a set of all online users except the sender
+                        Set<String> onlineUserListExceptSender = ManageServerConnectClientThread.onlineUserListExceptSender(ms.getSender());
+                        if (onlineUserListExceptSender == null) {
+                            returnedMs2.setMessageType(MessageType.COMM_MES_SENT_FAIL);
+                        } else {
+                            for (String user : onlineUserListExceptSender) {
+                                Message message = new Message(ms.getSender(), user, ms.getContent(), MessageType.COMM_MES);
+                                oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(user).getSocket().getOutputStream());
+                                oos.writeObject(message);
+                            }
+                            returnedMs2.setMessageType(MessageType.COMM_MES_SENT_SUCCEED);
+                        }
+                        oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(ms.getSender()).getSocket().getOutputStream());
+                        oos.writeObject(returnedMs2);
+
+                        break;
+
+                    case MessageType.SEND_FILE:
+                        Message returnedMsFile = new Message();
+
+                        if (ManageServerConnectClientThread.ifUserOnline(ms.getReceiver())) {
+                            oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(ms.getReceiver()).getSocket().getOutputStream());
+                            oos.writeObject(ms);
+
+                            // Tells the sender the message was sent successfully
+                            returnedMsFile.setMessageType(MessageType.FILE_SENT_SUCCEED);
+                        } else {
+                            returnedMsFile.setMessageType(MessageType.FILE_SENT_FAIL);
+                        }
+
+                        oos = new ObjectOutputStream(ManageServerConnectClientThread.getThread(ms.getSender()).getSocket().getOutputStream());
+                        oos.writeObject(returnedMsFile);
+
+                        break;
+
 
 
                 }

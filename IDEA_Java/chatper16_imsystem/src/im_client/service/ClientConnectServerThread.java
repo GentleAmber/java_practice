@@ -6,8 +6,10 @@ import im_common.MessageType;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Scanner;
 
 public class ClientConnectServerThread implements Runnable{
     private Socket socket;
@@ -63,6 +65,52 @@ public class ClientConnectServerThread implements Runnable{
 
                     case MessageType.COMM_MES_SENT_FAIL:
                         System.out.println("Failed to send message.");
+                        break;
+
+                    case MessageType.SEND_FILE:
+                        System.out.print(ms.getSender() + " sends you a file to " +
+                                ms.getTargetPath() + ". Accept it? (Y/N)");
+                        Scanner scanner = new Scanner(System.in);
+                        boolean innerLoop = true;
+
+                        // The IMView will take the first input so need to enter twice here
+                        while (innerLoop) {
+                            char choice = scanner.next().charAt(0);
+                            switch (choice) {
+                                case 'Y':
+                                case 'y':
+                                    System.out.println("Saving the file...");
+                                    Path path = Paths.get(ms.getTargetPath());
+                                    try {
+                                        Files.write(path, ms.getFile());
+                                        System.out.println("Wrote " + ms.getFile().length + " bytes to file.");
+                                        innerLoop = false;
+                                    } catch (NoSuchFileException | InvalidPathException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    break;
+
+                                case 'n':
+                                case 'N':
+                                    System.out.println("File reception cancelled.");
+                                    innerLoop = false;
+                                    break;
+
+                                default:
+                                    System.out.println("Wrong input. Please enter again.");
+
+                            }
+                        }
+
+                        break;
+
+                    case MessageType.FILE_SENT_SUCCEED:
+                        System.out.println("File is sent successfully.");
+                        break;
+
+                    case MessageType.FILE_SENT_FAIL:
+                        System.out.println("Failed to send the file.");
                         break;
 
                 }

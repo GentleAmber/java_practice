@@ -4,6 +4,7 @@ import im_client.service.ManageClientConnectServerThread;
 import im_client.service.UserClientService;
 import im_server.service.ManageServerConnectClientThread;
 
+import java.nio.file.InvalidPathException;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -56,13 +57,23 @@ public class IMView {
                                         e.printStackTrace();
                                     }
                                     break;
-                                case "2" :
+                                case "2" :// Message everyone
+                                    System.out.println("Enter the content (one line) you want to send: ");
+                                    Scanner contentScanner2 = new Scanner(System.in);
+                                    String content2 = contentScanner2.nextLine();
+                                    userClientService.messageAll(content2);
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
                                     break;
                                 case "3" :// Message someone
                                     // First get a list of online users
                                     userClientService.requestOnlineUserList();
                                     try {
-                                        Thread.sleep(1000);
+                                        Thread.sleep(500);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
@@ -85,11 +96,50 @@ public class IMView {
                                     }
 
                                     break;
-                                case "4" :
+                                case "4" :// Send file(s)
+                                    userClientService.requestOnlineUserList();
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    System.out.print("Enter the id of the online user you want to message: ");
+                                    String receiverIdFile = scanner.next();
+
+                                    // Prevent the user from entering his own id
+                                    if (receiverIdFile.equals(userId)) {
+                                        System.out.println("Cannot send message to your self.");
+                                    } else {
+                                        Scanner pathScanner = new Scanner(System.in);
+                                        String path = null;
+                                        String targetPath = null;
+                                        try {
+                                            System.out.print("Enter the file path (format: d:\\xxx.jpg): ");
+                                            path = pathScanner.nextLine();
+                                            System.out.print("Enter the target path on the receiver's pc (format: d:\\xxx.jpg): ");
+                                            targetPath = pathScanner.nextLine();
+                                        } catch (InvalidPathException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        if (targetPath != null && path != null) {
+                                            userClientService.sendFile(receiverIdFile, path, targetPath);
+                                            try {
+                                                Thread.sleep(500);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+                                            System.out.println("Error. Please try again.");
+                                        }
+                                    }
+
                                     break;
                                 case "9" :
                                     loop = false;
                                     userClientService.userLogOut();
+
                                     break;
                                 default :
                                     System.out.println("Wrong input. Please enter again.");

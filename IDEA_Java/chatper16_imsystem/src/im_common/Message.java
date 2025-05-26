@@ -11,6 +11,24 @@ public class Message implements Serializable {
     private String content;
     private String messageType;
     private static final long serialVersion = 1l;
+    private byte[] file;
+    private String targetPath;
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public String getTargetPath() {
+        return targetPath;
+    }
+
+    public void setTargetPath(String targetPath) {
+        this.targetPath = targetPath;
+    }
 
     public Message(String sender, String receiver, String content, String messageType) {
         this.sender = sender;
@@ -22,6 +40,15 @@ public class Message implements Serializable {
     }
 
     public Message() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+        this.timestamp = LocalDateTime.now().format(formatter);
+    }
+
+    public Message(String receiver, byte[] data, String targetPath, String msgType) {
+        this.file = data;
+        this.targetPath = targetPath;
+        this.receiver = receiver;
+        this.messageType = msgType;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
         this.timestamp = LocalDateTime.now().format(formatter);
     }

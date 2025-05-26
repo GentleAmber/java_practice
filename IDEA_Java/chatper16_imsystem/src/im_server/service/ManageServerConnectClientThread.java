@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ManageServerConnectClientThread {
     private static HashMap<String, ServerConnectClientThread> hm = new HashMap<>();
@@ -37,5 +39,22 @@ public class ManageServerConnectClientThread {
 
     public static boolean ifUserOnline(String userId) {
         return hm.containsKey(userId);
+    }
+
+    public static Set<String> onlineUserListExceptSender(String userId) {
+        Set<String> onlineUsers = hm.keySet();
+        Set<String> copiedOnlineUsers = new HashSet<>();
+
+        for (String user : onlineUsers) {
+            copiedOnlineUsers.add(user);
+        }
+
+        copiedOnlineUsers.remove(userId);
+
+        if (copiedOnlineUsers == null || copiedOnlineUsers.isEmpty()) {
+            return null;
+        }
+
+        return copiedOnlineUsers;
     }
 }
