@@ -17,4 +17,5 @@ public interface MessageType {
     String SEND_FILE = "8";
     String FILE_SENT_SUCCEED = "8.1";
     String FILE_SENT_FAIL = "8.2";
+    String FILE_STORED_IN_SERVER = "8.3";
 }

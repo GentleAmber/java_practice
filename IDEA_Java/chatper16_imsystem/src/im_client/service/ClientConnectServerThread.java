@@ -43,76 +43,43 @@ public class ClientConnectServerThread implements Runnable{
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message ms = (Message) ois.readObject();
 
-                switch (ms.getMessageType()) {
-                    case MessageType.RETURN_ONLINE_USER:
-                        if (!ms.getContent().equals("")) {
-                            System.out.println("---------- Online user list ----------");
-                            System.out.println(ms.getContent());
-                        } else {
-                            System.out.println("----------- No user online -----------");
-                        }
-                        System.out.println("--------------------------------------");
-                        break;
-
-                    case MessageType.COMM_MES:
-                        System.out.println("\n" + ms.getTimestamp() + "\t" + ms.getSender());
+                if (ms.getMessageType().equals(MessageType.RETURN_ONLINE_USER)) {
+                    if (!ms.getContent().equals("")) {
+                        System.out.println("---------- Online user list ----------");
                         System.out.println(ms.getContent());
-                        break;
+                    } else {
+                        System.out.println("----------- No user online -----------");
+                    }
+                    System.out.println("--------------------------------------");
+                } else if (ms.getMessageType().equals(MessageType.COMM_MES)) {
+                    System.out.println("\n" + ms.getTimestamp() + "\t" + ms.getSender());
+                    System.out.println(ms.getContent());
+                } else if (ms.getMessageType().equals(MessageType.COMM_MES_SENT_SUCCEED)) {
+                    System.out.println("Message sent.");
+                } else if (ms.getMessageType().equals(MessageType.COMM_MES_SENT_FAIL)) {
+                    System.out.println("Failed to send message.");
+                } else if (ms.getMessageType().equals(MessageType.COMM_MES_STORED_IN_SERVER)) {
+                    System.out.println("Message received by the server. It " +
+                            "will be delivered when the receiver is back online.");
+                } else if (ms.getMessageType().equals(MessageType.SEND_FILE)) {
+                    System.out.println(ms.getSender() + " sends you a file to " + ms.getTargetPath());
 
-                    case MessageType.COMM_MES_SENT_SUCCEED:
-                        System.out.println("Message sent.");
-                        break;
+                    System.out.println("Saving the file...");
+                    Path path = Paths.get(ms.getTargetPath());
+                    try {
+                        Files.write(path, ms.getFile());
+                        System.out.println("Wrote " + ms.getFile().length + " bytes to file.");
+                    } catch (InvalidPathException | IOException e) {
+                        e.printStackTrace();
+                    }
 
-                    case MessageType.COMM_MES_SENT_FAIL:
-                        System.out.println("Failed to send message.");
-                        break;
-
-                    case MessageType.SEND_FILE:
-                        System.out.print(ms.getSender() + " sends you a file to " +
-                                ms.getTargetPath() + ". Accept it? (Y/N)");
-                        Scanner scanner = new Scanner(System.in);
-                        boolean innerLoop = true;
-
-                        // The IMView will take the first input so need to enter twice here
-                        while (innerLoop) {
-                            char choice = scanner.next().charAt(0);
-                            switch (choice) {
-                                case 'Y':
-                                case 'y':
-                                    System.out.println("Saving the file...");
-                                    Path path = Paths.get(ms.getTargetPath());
-                                    try {
-                                        Files.write(path, ms.getFile());
-                                        System.out.println("Wrote " + ms.getFile().length + " bytes to file.");
-                                        innerLoop = false;
-                                    } catch (NoSuchFileException | InvalidPathException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    break;
-
-                                case 'n':
-                                case 'N':
-                                    System.out.println("File reception cancelled.");
-                                    innerLoop = false;
-                                    break;
-
-                                default:
-                                    System.out.println("Wrong input. Please enter again.");
-
-                            }
-                        }
-
-                        break;
-
-                    case MessageType.FILE_SENT_SUCCEED:
-                        System.out.println("File is sent successfully.");
-                        break;
-
-                    case MessageType.FILE_SENT_FAIL:
-                        System.out.println("Failed to send the file.");
-                        break;
-
+                } else if (ms.getMessageType().equals(MessageType.FILE_SENT_SUCCEED)) {
+                    System.out.println("File is sent successfully.");
+                } else if (ms.getMessageType().equals(MessageType.FILE_SENT_FAIL)) {
+                    System.out.println("Failed to send the file.");
+                } else if (ms.getMessageType().equals(MessageType.FILE_STORED_IN_SERVER)) {
+                    System.out.println("File received by the server. It " +
+                            "will be delivered when the receiver is back online.");
                 }
 
             } catch (IOException | ClassNotFoundException e) {

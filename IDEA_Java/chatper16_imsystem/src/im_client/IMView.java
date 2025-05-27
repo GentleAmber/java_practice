@@ -44,7 +44,7 @@ public class IMView {
                             System.out.println("\t\t 1 Display online user list");
                             System.out.println("\t\t 2 Message all online users");
                             System.out.println("\t\t 3 Message someone");
-                            System.out.println("\t\t 4 Send file(s)");
+                            System.out.println("\t\t 4 Send file to someone");
                             System.out.println("\t\t 9 Exit");
                             System.out.print("Please enter your choice: ");
                             key = scanner.next();

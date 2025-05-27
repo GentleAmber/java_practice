@@ -18,7 +18,7 @@ public class ManageServerConnectClientThread {
         return hm.get(userId);
     }
 
-    public static String getOnlineUser() {
+    public static String getOnlineUserStringList() {
         String onlineUserList = "";
         if (!hm.keySet().isEmpty()) {
             for (String userId : hm.keySet()) {
