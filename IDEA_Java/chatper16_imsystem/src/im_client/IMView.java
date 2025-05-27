@@ -42,7 +42,7 @@ public class IMView {
                         while (loop) {
                             System.out.println("======= Welcome, " + userId + " =======");
                             System.out.println("\t\t 1 Display online user list");
-                            System.out.println("\t\t 2 Message all");
+                            System.out.println("\t\t 2 Message all online users");
                             System.out.println("\t\t 3 Message someone");
                             System.out.println("\t\t 4 Send file(s)");
                             System.out.println("\t\t 9 Exit");
