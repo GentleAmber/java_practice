@@ -37,7 +37,7 @@ public class UserClientService {
 
             // If verification succeeds, start a thread to keep the socket for continuing communication
             if (ms.getMessageType().equals(MessageType.LOGIN_SUCCEED)) {
-                ClientConnectServerThread ccst = new ClientConnectServerThread(socket);
+                ClientConnectServerThread ccst = new ClientConnectServerThread(socket, userId);
                 new Thread(ccst).start();
                 // For further expansion, put the thread/socket in a collection to manage
                 ManageClientConnectServerThread.addThread(userId, ccst);

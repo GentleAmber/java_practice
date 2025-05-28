@@ -14,4 +14,8 @@ public class ManageClientConnectServerThread {
         return hm.get(userId);
     }
 
+    public static void removeThread(String userId) {
+        hm.remove(userId);
+    }
+
 }

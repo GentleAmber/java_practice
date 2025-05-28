@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class ClientConnectServerThread implements Runnable{
     private Socket socket;
     private boolean loop = true;
+    private String userId;
 
     public boolean isLoop() {
         return loop;
@@ -23,8 +24,9 @@ public class ClientConnectServerThread implements Runnable{
         this.loop = loop;
     }
 
-    public ClientConnectServerThread(Socket socket) {
+    public ClientConnectServerThread(Socket socket, String userId) {
         this.socket = socket;
+        this.userId = userId;
     }
 
     public Socket getSocket() {
@@ -80,6 +82,12 @@ public class ClientConnectServerThread implements Runnable{
                 } else if (ms.getMessageType().equals(MessageType.FILE_STORED_IN_SERVER)) {
                     System.out.println("File received by the server. It " +
                             "will be delivered when the receiver is back online.");
+                } else if (ms.getMessageType().equals(MessageType.SERVER_EXIT)) {
+                    System.out.println("Lost the connection with server... Will exit soon.");
+                    ManageClientConnectServerThread.removeThread(userId);
+                    this.socket.close();
+                    System.exit(0);
+
                 }
 
             } catch (IOException | ClassNotFoundException e) {
